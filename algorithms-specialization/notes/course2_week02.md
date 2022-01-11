@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Divide & Conquer, Counting Inversions, Master Method)
+Algorithm (Counting Inversions, Strassen's Subcubic Matrix Multiplication)
 ===
 ## The Divide and Conquer Paradigm
 1. Divde into smaller subproblems
@@ -67,10 +67,39 @@ let $x$ be an element of the 1st array B.
 (2) if $y$ copied to output D before $x$, then $y < x$ => $x, y$ are a spilt inversion  
 
 #### Merge_and_CountSplitInv
-- while merging the two sorted subarrays, keep running total of number of split inversions
-- when element of 2nd array C gets copied to output D, increment total by number of elements remaining in 1st array B
+![Image](https://i.imgur.com/cDjYW9V.png)
 
-runtime of subroutine:
-$O(n) + O(n) = O(n)$
-(merge + running total)
+- 當要merge 2個已排序好的subarrays時，持續記錄total number of split inversions
+- 如果有2nd array C要複製到output D時，增加split inversion數量，增加量等同目前在1st array B的元素個數
+
+runtime of subroutine:  
+$O(n) + O(n) = O(n)$  
+(merge + running total)  
+此加法有點瑕疵，因為如果加了n次$O(n)$則沒辦法簡化，不過這個演算法只有2次$O(n)$，故可以簡化  
 => Sort_and_Count runs in $O(nlogn)$ time
+
+### Strassen's Subcubic Matrix Multiplication
+#### Matrix Multiplication Problem
+![Image](https://i.imgur.com/M0k76gM.png)
+
+where $z_{ij} = (\text{ith row of x}) * (\text{jth col of y})$  
+$= \Sigma_{k=1}^n(x_{ik}*y_{kj})$
+
+#### Example (n=2)
+![Image](https://i.imgur.com/vfnwqZo.png)
+
+asymptotic running time of the straightforward iterative algorithm:  
+$\Theta(n^3)$
+
+這邊的n代表矩陣的大小為nxn
+
+#### Applying  Divide and Conquer
+![Image](https://i.imgur.com/9vv2679.png)
+
+#### Strassen's Algorithm (1969)
+1. recursively compute only $f$ (cleverly chosen) products
+2. do the necessary (clever) additions + subtractions (still $\Theta(n^2)$ time)
+
+Fact: better than cubic time! (Master Method lecture)
+
+
