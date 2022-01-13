@@ -103,3 +103,49 @@ $\Theta(n^3)$
 Fact: better than cubic time! (Master Method lecture)
 
 
+$X=\begin{pmatrix} A & B \\ C & D \\ \end{pmatrix}$
+
+$Y=\begin{pmatrix} E & F \\ G & H \\ \end{pmatrix}$
+
+The Seven Products:
+- $P_1=A(F-H)$
+- $P_2=(A+B)H$
+- $P_3=(C+D)E$
+- $P_4=D(G-E)$
+- $P_5=(A+D)(E+H)$
+- $P_6=(B-D)(G+H)$
+- $P_7=(A-C)(E+F)$
+
+不需要8次乘法，故減少了1次，將演算法複雜度降到cubic time以下
+
+Claim:  
+$XY=\begin{pmatrix} AE+BG & AF+BH \\ CE+DG & CF+DH \\ \end{pmatrix}=\begin{pmatrix} P_5+P_4-P_2+P_6 & P_1+P_2 \\ P_3+P_4 & P_1+P_5-P_3-P_7 \\ \end{pmatrix}$
+
+Proof:  
+自己代數運算即可
+
+### Closest Pair $O(nlogn)$
+#### The Closest Pair Problem
+Input:  
+a set $P={p_1, ..., p_n}$ of n points in the plane ($R^2$)  
+(distinct x-coordinates, y-coordinates for convience)
+
+Notation:  
+$d(p_i, p_j)$ = Euclidean distance  
+So if $p_i=(x_i, y_i)$ and $p_j=(x_j, y_j)$, then $d(p_i, p_j)=\sqrt{(x_i-y_i)^2+(x_j-y_j)^2}$
+
+Output:  
+a pair $p^*, q^+\in P$ of distinct points that minimize $d(p, q)$
+
+#### Brute-force search
+Takes $O(n^2)$ time
+
+#### 1-D version of Closest Pair:
+1. sort points ($O(nlogn)$)
+2. return closest pair of adjacent points ($O(n)$)
+
+Goal:  
+$O(nlogn)$ time for 2-D version
+
+#### High-Level Approach
+1. make copies of points sorted by x-coor ($P_x$) and y-coor ($P_y$) ($O(nlogn)$ time)
