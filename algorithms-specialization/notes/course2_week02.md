@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Counting Inversions, Strassen's Subcubic Matrix Multiplication)
+Algorithm (Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair)
 ===
 ## The Divide and Conquer Paradigm
 1. Divde into smaller subproblems
@@ -148,4 +148,92 @@ Goal:
 $O(nlogn)$ time for 2-D version
 
 #### High-Level Approach
+![Image](https://i.imgur.com/vuVgqkR.png)
 1. make copies of points sorted by x-coor ($P_x$) and y-coor ($P_y$) ($O(nlogn)$ time)
+2. Use divide & conquer
+
+#### ClosestPair($P_x, P_y$)
+1. let $Q$ = left half of $P$, $R$ = right half of $P$. Form $Q_x, Q_y, R_x, R_y$ (takes $O(n)$ time)
+2. $(p_1, q_1)$ = ClosetPair($Q_x, Q_y$)
+3. $(p_2, q_2)$ = ClosetPair($R_x, R_y$)
+4. $\delta=min(d(p_1, q_1), d(p_2, q_2))$ 
+4. $(p_3, q_3)$ = ClosetSplitPair($P_x, P_y, \delta$)
+5. return best of $(p_1, q_1), (p_2, q_2), (p_3, q_3)$
+
+![Image](https://i.imgur.com/4ipe5Xp.png)
+只有在不幸運的情況下才需要計算ClosestSplitPair
+
+ClosetSplitPair需要$O(n)$ time
+
+#### ClosestSplitPair($P_x, P_y, \delta$)
+($\delta$是原本divide & conquer找到最小的pair的距離)  
+![Image](https://i.imgur.com/ieAMYn3.png)
+
+let $\bar{x}$ = biggest x-coordinate in left of $P$ ($O(1)$ time)  
+let $S_y$ = points of $P$ with x-coordinate in $[\bar{x} - \delta, \bar{x} + \delta]$, sorted by y-coordinate ($O(n)$ time)
+
+```
+Initialize best = $\delta$, best pair = NULL
+For i=1 to |Sy| - 1
+    For j=1 to min(7, |Sy|-i)
+        let p, q = (i)th, (i+j)th points of Sy
+        If d(p, q) < best
+            best pair = (p, q)
+            best = d(p, q)
+```
+($O(n)$ time，因為for loop的迭代次數是固定量的)  
+![Image](https://i.imgur.com/duPbAyO.png)
+
+#### ClosestSplitPair($P_x, P_y, \delta$) Correctness Claim
+Claim:  
+let $p \in Q, q \in R$ be a split pair with $d(p, q) < \delta$
+
+Then:  
+(A) $p, q$ are members of $S_y$  
+(B) $p, q$ are at most 7 positions apart in $S_y$  
+(意思指如果$S_y$中有距離最短的pair則他們一定在7個距離內)
+
+推論Corollary 1:  
+If no closest pair of $P$ is a split, then ClosestSplitPair finds it.
+
+
+推論Corollary 2:  
+ClosestPair is correct, and runs in $O(nlogn)$ time
+
+#### Proof of Correctness Claim (A)
+因為$\bar{x}$是左半邊的最大x值，且$\delta$為左與右半邊pair的最短距離，所以如果split中有最短距離的pair，一定會在$[\bar{x} - \delta, \bar{x} + \delta]$之間。
+
+![Image](https://i.imgur.com/ES1Uv3N.png)
+
+#### Proof of Correctness Claim (B
+key picture:  
+draw $\frac{\delta}{2}\times \frac{\delta}{2}$ with center $\bar{x}$ and bottom $min(y_1, y_2)$
+
+![Image](https://i.imgur.com/BR9YAe4.png)
+
+引理lemma 1:  
+all points of $S_y$ with y-coordinate between those of $p, q$, lie in one of 8 boxes
+
+Proof:  
+1. y-coordinates of $p, q$ differ by $< \delta$  
+2. by definition of $S_y$, all have x-coordinates between $[\bar{x} - \delta, \bar{x} + \delta]$
+
+引理lemma 2:  
+At most one point of $P$ in each box.
+
+Proof:  
+By contradicition.  
+如果$a, b$都在同一個box中，已知每個box一定會在同一側 ($Q, R$)，且$d(a,b) \leq \frac{\delta}{2}\sqrt{2} < \delta$  
+則違反了原本的假設，因為我們已經確定$\delta$是左或右邊的最短距離
+
+#### Final Wrap-Up
+![Image](https://i.imgur.com/nxgjSaA.png)
+
+根據lemma 1和2  
+最多只會有8個點在這張圖中  
+所以$S_y$中若有最短距離pair則其$p, q$最多距離7  
+
+故得證ClosesPair演算法
+
+也可參考演算法筆記：  
+[http://web.ntnu.edu.tw/~algo/Point2.html#3](http://web.ntnu.edu.tw/~algo/Point2.html#3)
