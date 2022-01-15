@@ -231,9 +231,70 @@ By contradicition.
 
 根據lemma 1和2  
 最多只會有8個點在這張圖中  
-所以$S_y$中若有最短距離pair則其$p, q$最多距離7  
+所以$S_y$中若有最短距離pair $(p, q)$，則$p, q$最多距離7  
 
 故得證ClosesPair演算法
 
 也可參考演算法筆記：  
 [http://web.ntnu.edu.tw/~algo/Point2.html#3](http://web.ntnu.edu.tw/~algo/Point2.html#3)
+
+### The Master Method
+Cool feature:  
+A "black box" for solving recurrences.
+
+Assumption:  
+All subproblems have equal size.
+
+#### Recurrence Format
+1. Base case:  
+    $T(n) \leq$ a constant for all sufficiently small $n$
+2. For all larger $n$:  
+    $T(n) \leq aT(\frac{n}{b}) + O(n^d)$ where  
+    - a = number of recursive calls ($\geq 1$)  
+    - b = input size shrinkage factor ($> 1$)  
+    - d = exponent in running time of "combine step" ($\geq 0$)  
+    
+    a, b, d independent of n
+
+#### The Master Method
+$
+T(n) \leq aT(\frac{n}{b}) + O(n^d)
+$
+
+$
+T(n) = 
+\begin{cases}
+    O(n^dlogn) & \text{if } a = b^d & \text{(case 1)}\\
+    O(n^d) & \text{if } a < b^d & \text{(case 2)}\\
+    O(n^{log_ba}) & \text{if } a > b^d & \text{(case 3)}
+\end{cases}
+$
+
+#### Examples
+1. Merge Sort:  
+    $T(n) \leq 2T(\frac{n}{2}) + O(n^1)$ (case 1)  
+    => $T(n) \leq O(n^dlogn) = O(nlogn)$
+
+2. Binary Search:  
+    $T(n) \leq 1T(\frac{n}{2}) + O(n^0)$ (case 1)  
+    => $T(n) = O(n^dlogn) = O(logn)$
+
+3. Normal Recursive Integer Multiplication  
+    $T(n) \leq 4T(\frac{n}{2}) + O(n^1)$ (case 3)  
+    => $T(n) = O(n^{log_ba}) = O(logn^{log_24}) = O(n^2)$
+
+4. Gauss's Recursive Integer Multiplication  
+    $T(n) \leq 3T(\frac{n}{2}) + O(n^1)$ (case 3)  
+    => $T(n) = O(n^{log_ba}) = O(logn^{log_23}) \approx O(n^{1.59})$
+
+5. Strassen's Matrix Multiplication  
+    $T(n) \leq 7T(\frac{n}{2}) + O(n^1)$ (case 3)  
+    => $T(n) = O(n^{log_ba}) = O(logn^{log_27}) \approx O(n^{2.81})$
+
+6. 虛擬的 Fictitious Recurrence  
+    $T(n) \leq 2T(\frac{n}{2}) + O(n^2)$ (case 2)  
+    => $T(n) = O(n^d) = O(n^2)$
+
+### Problem Set #2
+![Image](https://i.imgur.com/XUTKb53.png)
+https://stackoverflow.com/a/34258332
