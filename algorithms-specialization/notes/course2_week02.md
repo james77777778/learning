@@ -295,6 +295,98 @@ $
     $T(n) \leq 2T(\frac{n}{2}) + O(n^2)$ (case 2)  
     => $T(n) = O(n^d) = O(n^2)$
 
+#### 前言 Preamble:  
+Assume recurrence is  
+1. $T(1) \leq c$
+2. $T(n) \leq aT(\frac{n}{b}) + cn^d$  
+
+and $n$ is a power of $b$  
+(general case is similar, but more 乏味tedious)
+
+Idea:  
+generalize MergeSort analysis  
+(i.e. use a recursion tree)
+
+#### Single Level
+$
+\text{total work at level j} \leq a^j c(\frac{n}{b^j})^d = cn^d(\frac{a}{b^d})^j
+$
+
+- $a^j$: # of level $j$ subproblems
+- $(\frac{n}{b^j})$: size of each level $j$ subproblem
+
+#### Total Work
+Summing over all levels $j=0, 1, 2, ..., log_bn$:  
+
+$
+\text{total work} \leq cn^d \Sigma_{j=0}^{log_bn}(\frac{a}{b^d})^j \text{ (*)}
+$
+
+#### How to Think About (\*)
+Our upper bound on the work at level $j$:
+$
+cn^d \times (\frac{a}{b^d})^j
+$
+
+- $a$ = rate of subproblem proliferation (RSP)
+- $b^d$ = rate of work shrinkage (RWS) per subproblem
+
+#### Intuition for the 3 Cases
+$
+cn^d \times (\frac{a}{b^d})^j
+$
+
+1. RSP=RWS: same amount of work each level (like Merge Sort)  
+    expect $O(n^dlogn)$
+2. RSP\<RWS: less work each level, most work at the root  
+    might expect $O(n^d)$
+3. RSP\>RWS: more work each level, most work at the leafs  
+    might expect $O(\text{number of leaves})$
+
+#### Proof
+$
+\text{total work} \leq cn^d \Sigma_{j=0}^{log_bn}(\frac{a}{b^d})^j \text{ (*)}
+$
+
+等比級數公式:  
+$1+r+r^2+...+r^k = \frac{r^{k+1}-1}{r-1}$
+
+- Case 1 (最簡單):  
+    If $a=b^d$, then  
+    (\*) = $cn^d(log_bn+1) = O(n^dlogn)$
+
+- Case 2:  
+    If $a<b^d$ (RSP < RWS) and let $r=\frac{a}{b^d}$, then  
+    (\*) = $O(n^d)$  
+    會被最後一項dominate，原因來自於等比級數公式若$r<1$則公式=$\frac{1}{r-1}$為constant，可被$O$消滅掉
+
+- Case 3 (最難):  
+    If $a>b^d$ (RSP > RSW) and let $r=\frac{a}{b^d}$, then  
+    (\*) = $O(n^d(\frac{a}{b^d})^{log_bn})$
+
+    其中$b^{-dlog_bn}=n^{-d}$，可把上式的$n^d$與右邊的項消除  
+    所以(\*) = $O(a^{log_bn})$
+
+    $a^{log_bn}$等同於The number of leaves of the recursion tree  
+    (每層產生$a$個subproblem, 而$log_bn$為層數)  
+    (\*) = $O(a^{log_bn}) = O(\text{number of leaves}) = O(n^{log_ba})$  
+    (since $(log_bn)(log_ba) = (log_ba)(log_bn)$)
+
+故3個Case皆得證！
+
+$
+T(n) \leq aT(\frac{n}{b}) + O(n^d)
+$
+
+$
+T(n) = 
+\begin{cases}
+    O(n^dlogn) & \text{if } a = b^d & \text{(case 1)}\\
+    O(n^d) & \text{if } a < b^d & \text{(case 2)}\\
+    O(n^{log_ba}) & \text{if } a > b^d & \text{(case 3)}
+\end{cases}
+$
+
 ### Problem Set #2
 ![Image](https://i.imgur.com/XUTKb53.png)
 https://stackoverflow.com/a/34258332
