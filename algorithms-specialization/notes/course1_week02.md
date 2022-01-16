@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair)
+Algorithm (Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair, Master Method)
 ===
 ## The Divide and Conquer Paradigm
 1. Divde into smaller subproblems
