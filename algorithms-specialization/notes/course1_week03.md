@@ -77,11 +77,69 @@ Running time最差為$O(n^2)$
 ![Image](https://i.imgur.com/PjW1XUu.png)
 
 若運氣很好，每次都剛好選到中位數  
-Running time為$O(nlogn)$  
+Running time為$O(n\log n)$  
 ![Image](https://i.imgur.com/LYuqh4F.png)
 
 #### Random Pivots
 Intuition:  
-1. If always get a 25-75 split, good enuough for $O(nlogn)$ running time  
+1. If always get a 25-75 split, good enuough for $O(n\log n)$ running time  
     (prove via recursion tree)
-2. Half of elements give a 25-75 split
+2. Half of elements give a 25-75 split  
+    譬如說1-100的數列，只要選到26-75就會落在25-75的範圍內，故會有50%的機率
+
+#### Average Running Time of QuickSort
+QuickSort Theorem:  
+For every input array of length $n$, the average running time of QuickSort (with random pivot) is $O(n\log n)$
+
+對於任何的input data皆成立！
+
+### QuickSort: Analysis
+#### Preliminaries
+Fix input array A of length n.
+
+Sample space $\Omega$ = all possible outcomes of random choices in QuickSort (i.e., pivot sequences)
+
+Key random variable:  
+for $\sigma \in \Omega$, $C(\sigma)$ = number of comparisons between two input elements made by QuickSort (given random choices $\sigma$)
+
+Lemma:  
+Running time of QuickSort dominated by comparisons  
+沒有去證明，不過相對不重要，因為QuickSort大部分消耗的時間都來自於"比較"
+
+Goal:  
+$E[C] = O(n\log n)$
+
+#### Building Blocks
+無法使用Master Method  
+(因為random, unbalanced subproblems)
+
+Notation:  
+- $A$ = fixed input array
+- $z_i=i^{\text{th}}$ smallest element of $A$  
+    ![Image](https://i.imgur.com/qBlDalY.png)
+- For $\sigma \in \Omega$, indices $i<j$, let $X_{ij}(\sigma)$ = number of times $z_i, z_j$ get compared in QuickSort with pivot sequence.
+
+![Image](https://i.imgur.com/pxOnuBY.png)  
+pivot會和其他元素比較正好1次，且這個pivot結束partition流程後就不會再被拿來比較了 (divide & conquer)
+
+#### A Decomposition Approach
+So:  
+- $C(\sigma)$ = number of comparisons between input elements
+- $X_{ij}(\sigma)$ = number of comparisions between $z_i, z_j$
+
+Thus:  
+$\forall \sigma, C(\sigma)=\Sigma_{i=1}^{n-1}\Sigma_{j=i+1}^{n}X_{ij}(\sigma)$
+
+By linearity of expection:  
+$E[C] = \Sigma_{i=1}^{n-1}\Sigma_{j=i+1}^{n}E[X_{ij}]$  
+Since $E[X_{ij}]=0\cdot Pr[X_{ij}=0]+1\cdot Pr[X_{ij}=1]=Pr[X_{ij}=1]$
+
+Thus:  
+$E[C] = \Sigma_{i=1}^{n-1}Pr[z_i, z_j \text{ get compared}]$ (\*)
+
+上面流程主要為：
+1. 找出真正重要的random variable Y
+2. 將Y表達成其他指標性的random variable的總和, $Y=\Sigma_{l=1}^mX_l$
+3. 利用linearity of expectation:  
+    $E[Y]=\Sigma_{l=1}^mPr[X_l=1]$  
+    就只要知道$X_l$即可求解
