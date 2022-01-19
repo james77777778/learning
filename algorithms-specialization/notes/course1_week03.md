@@ -143,3 +143,45 @@ $E[C] = \Sigma_{i=1}^{n-1}Pr[z_i, z_j \text{ get compared}]$ (\*)
 3. 利用linearity of expectation:  
     $E[Y]=\Sigma_{l=1}^mPr[X_l=1]$  
     就只要知道$X_l$即可求解
+
+#### Key Claim
+$\forall i<j, Pr[z_i, z_j \text{ get compared}] = \frac{2}{j-i+1}$
+
+Proof:  
+Fix $z_i, z_j$ with $i<j$. Consider the set $z_i, z_{i+1}, ..., z_{j-1}, z_j$
+
+Inductively:  
+As long as some of these are chosen as a pivot, all are passed to the same recursive call
+
+Consider the first among $z_i, z_{i+1}, ..., z_{j-1}, z_j$ that gets chosen as a pivot  
+1. if $z_i$ or $z_j$ gets chosen first, then $z_i$ and $z_j$ get compared  
+    如果其中一者被選為pivot, 則這兩者一定會被比較
+2. if one of $z_{i+1}, ..., z_{j-1}$ get chosen first, then $z_i, z_j$ are never compared  
+    如果(i+1)~(j-1)被選為pivot, 則i和j一定不會被比較，因為被分成不同split了
+
+Note:  
+Since pivots always chosen uniformly at random, each of $z_i, z_{i+1}, ..., z_{j-1}, z_j$ is equally likely to be the first pivot.  
+=> $Pr[z_i, z_j \text{ get compared}] = \frac{2}{j-i+1}$  
+- 分子$2$代表第一種情況，其中兩者之一被選為pivot
+- 分母$j-i+1$代表所有可能的情況 (第一種+第二種)
+
+So:  
+$E[C] = \Sigma_{i=1}^{n-2}\Sigma_{j=i+1}^n\frac{2}{j-i+1}$ (\*)
+
+#### Final Calculations
+$E[C] = 2\Sigma_{i=1}^{n-2}\Sigma_{j=i+1}^n\frac{1}{j-i+1}$
+
+Note:  
+For each fixed $i$, the inner sum is $\Sigma_{j=i+1}^n\frac{1}{j-i+1}=\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+...$
+
+![Image](https://i.imgur.com/LfVtAGp.png)
+
+So:  
+$E[C] \leq 2\cdot n\cdot \Sigma_{k=2}^n\frac{1}{k}$
+
+現在只要證明$\Sigma_{k=2}^n\frac{1}{k} < \ln n$
+
+![Image](https://i.imgur.com/0Kmk8i0.png)
+
+So:  
+$E[C] = 2n\ln n$ 證明完畢！
