@@ -185,3 +185,6 @@ $E[C] \leq 2\cdot n\cdot \Sigma_{k=2}^n\frac{1}{k}$
 
 So:  
 $E[C] = 2n\ln n$ 證明完畢！
+
+### Problem Set
+[https://blogs.asarkar.com/algorithms-design-analysis/probability/](https://blogs.asarkar.com/algorithms-design-analysis/probability/)
