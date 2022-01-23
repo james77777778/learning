@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Quick Sort, )
+Algorithm (Quick Sort)
 ===
 ## Quick Sort
 Input:  

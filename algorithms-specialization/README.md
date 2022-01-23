@@ -6,7 +6,7 @@
 1. Divide and Conquer, Sorting and Searching, and Randomized Algorithms
     - Week1: Intro, Merge Sort, Guiding, Notations ($O, \Omega,\Theta$)
     - Week2: Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair, Master Method
-    - Week3: .
+    - Week3: Quick Sort
     - Week4: .
 2. Graph Search, Shortest Paths, and Data Structures
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
