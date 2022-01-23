@@ -28,3 +28,10 @@ Run pytest in each subfolder in `./codes`.
     cd algorithms-specialization/codes/course1_week2
     pytest
     ```
+3. Quick Sort
+    ```bash
+    cd algorithms-specialization/codes/course1_week3
+    pytest
+    # or
+    python3 quick_sort.py
+    ```
