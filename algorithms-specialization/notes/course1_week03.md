@@ -93,8 +93,8 @@ For every input array of length $n$, the average running time of QuickSort (with
 
 對於任何的input data皆成立！
 
-### QuickSort: Analysis
-#### Preliminaries
+## QuickSort: Analysis
+### Preliminaries
 Fix input array A of length n.
 
 Sample space $\Omega$ = all possible outcomes of random choices in QuickSort (i.e., pivot sequences)
@@ -122,7 +122,7 @@ Notation:
 ![Image](https://i.imgur.com/pxOnuBY.png)  
 pivot會和其他元素比較正好1次，且這個pivot結束partition流程後就不會再被拿來比較了 (divide & conquer)
 
-#### A Decomposition Approach
+### A Decomposition Approach
 So:  
 - $C(\sigma)$ = number of comparisons between input elements
 - $X_{ij}(\sigma)$ = number of comparisions between $z_i, z_j$
@@ -168,7 +168,7 @@ Since pivots always chosen uniformly at random, each of $z_i, z_{i+1}, ..., z_{j
 So:  
 $E[C] = \Sigma_{i=1}^{n-2}\Sigma_{j=i+1}^n\frac{2}{j-i+1}$ (\*)
 
-#### Final Calculations
+### Final Calculations
 $E[C] = 2\Sigma_{i=1}^{n-2}\Sigma_{j=i+1}^n\frac{1}{j-i+1}$
 
 Note:  
