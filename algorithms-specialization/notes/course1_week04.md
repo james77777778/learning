@@ -76,3 +76,53 @@ RSelect is correct (guaranteed to output ith order statistic)
 Proof:  
 By induction
 
+### Proof I: Tracking Progress via Phases
+Note:  
+RSelect uses $\leq cn$ operations outside of the recursive call (for some constant $c > 0$)
+
+Notation:  
+RSelect is in phase $j$ if current array size between $(\frac{3}{4})^{j+1}n$ and $(\frac{3}{4})^{j}n$
+- $X_j$ = number of recursive calls during phase $j$
+
+Note:  
+Running time of RSelect $\leq \Sigma_{\text{phase }j}X_j \cdot c \cdot (\frac{3}{4})^jn$ (\*)
+- $(\frac{3}{4})^jn$: $\leq$ array size during phase $j$
+- $c \cdot (\frac{3}{4})^jn$: works per phase $j$ subproblem
+- $X_j$: number of phase $j$ subproblems
+
+### Proof II: Reduction to Coin Flipping
+Note:  
+If RSelect choose a pivot giving a 25-75 split (or better), **then current phase ends!**  
+新的subarray最大就是75%的原本長度
+
+Recall:  
+probability of 25-75 split or better is 50%
+
+So:  
+$E[X_j] \leq$ expected number of times you need to flip a fair coin to get one "heads"  
+(如果正面代表好的pivot; 反面代表不好的pivot)
+
+### Proof III: Coin Flipping Analysis
+Let $N$ = number of coin flips until get heads. (geometric random variable)
+
+Note:  
+$E[N] = 1 + \frac{1}{2} \cdot E[N]$
+- $1$: 代表第一次就骰到正面
+- $\frac{1}{2} \cdot E[N]$: 代表骰到反面，之後的期望值
+
+Solution:  
+$E[N] = 2$ 並且已知 $E[X_j] \leq E[N]$
+
+### Final Proof
+Running time of RSelect $\leq \Sigma_{\text{phase }j}X_j \cdot c \cdot (\frac{3}{4})^jn$ (\*)
+
+Expected running time of RSelect $\leq E[cn\Sigma_{\text{phase }j}(\frac{3}{4})^jX_j]$ (\*)
+
+$= cn\Sigma_{\text{phase }j}(\frac{3}{4})^jE[X_j]$
+
+$\leq 2cn\Sigma_{\text{phase }j}(\frac{3}{4})^j$  
+(利用等比級數公式得到$\Sigma_{\text{phase }j}(\frac{3}{4})^j \leq \frac{1}{1-\frac{3}{4}} = 4$)
+
+$\leq 8cn = O(n)$
+
+證明完畢！
