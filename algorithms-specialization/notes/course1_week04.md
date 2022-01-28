@@ -136,6 +136,13 @@ $\leq 8cn = O(n)$
 Examples:  
 road networks, the web
 
+### Graph Representation
+只考慮edge number，而非考慮minimu cuts
+![Image](https://i.imgur.com/HY1NAsD.png)
+
+- Adjacency Matrix
+- Adjacency Lists (後續課程主要使用這個資料結構)
+
 ### Cuts of Graphs
 Definition:  
 a cut of a graph (V, E) is a partition of V into two non-empty sets A and B
@@ -163,9 +170,160 @@ A Few Applications:
 - community detection
 - iamge segmentation
 
-### Graph Representation
-只考慮edge number，而非考慮minimu cuts
-![Image](https://i.imgur.com/HY1NAsD.png)
+## Random Contraction Algorithm
+(Karger, early 90s)
 
-- Adjacency Matrix
-- Adjacency Lists (後續課程主要使用這個資料結構)
+```
+While there are more than 2 vertices:  
+- pick a remaining edge (u, v) uniformly at random
+- merge (or contract) u and v into a single vertex
+- remove self-loops
+return cut represented by final 2 vertices
+```
+
+主要做法就是不停的把nodes合併成super nodes，最後再展開來得到cut
+
+Example:  
+![Image](https://i.imgur.com/VnuIKq1.png)
+
+但是這是個random的演算法，也有可能找到不好的結果：
+
+![Image](https://i.imgur.com/SUQQ7y3.png)
+
+重要要問的是，有多少的機率能夠成功找到min cut？
+
+### Random Contraction Algorithm: The probability of success?
+Fix a graph G=(V, E) with n vertices, m edges  
+Fix a minimum cut (A, B)  
+Let k = number of edges crossing (A, B)  
+(call these edges F)
+
+### What coud go wrong?
+1. Suppose an edge of F is contracted at some point  
+    algorithm will not output (A, B)
+2. Suppose only edges inside A or inside B get contracted  
+    algorithm will output (A, B)
+
+![Image](https://i.imgur.com/Dx3PK04.png)
+
+Thus:  
+$\Pr[\text{output is (A, B)}]$ = $\Pr[\text{never contracts an edge of F}]$
+
+Let Si = event that an edge of F contracted in iteration i
+
+Goal:  
+compute $\Pr[\neg S_1 \cap \neg S_2 \cap ... \cap \neg S_{n-2}]$
+
+### The First Iteration
+Key Observation:  
+degree of each vertex is at least k
+
+- 假設有min cut分成(A, B)兩個set，k為crossing edges的數量
+- v個vertices
+- m個edges
+
+Reason:  
+each vertex v defines a cut ($\{v\}, V-\{v\}$)
+
+![Image](https://i.imgur.com/orkjSE0.png)
+
+Since:  
+$kn \leq \Sigma_v\text{degree}(v) = 2m$, we have $m \geq \frac{kn}{2}$
+
+Since:  
+$\Pr[S_1] = \frac{k}{m}$, $\Pr[S_1] \leq \frac{2}{n}$
+
+### The Second Iteration
+Recall:  
+$\Pr[\neg S_1 \cap \neg S_2] = \Pr[\neg S_2 | \neg S_1] \cdot \Pr[\neg S_1]$
+
+其中  
+$\Pr[\neg S_2 | \neg S_1]=1-\frac{k}{\text{number remaining edges}}$  
+$\Pr[\neg S_1] \geq (1-\frac{2}{n})$
+
+Note:  
+all nodes in contracted graph define cuts in G (with at least k crossing edges)  
+=> all degrees in contracted graph are at least k
+
+So:  
+number of remaining edges $\geq \frac{1}{2}k(n-1)$
+
+So:  
+$\Pr[\neg S_2 | \neg S_1] \geq 1-\frac{2}{n-1}$
+
+### All Iterations
+In general:  
+$\Pr[\neg S_1 \cap \neg S_2 \cap ... \cap \neg S_{n-2}] = \Pr[\neg S_1]\Pr[\neg S_2 | \neg S_1]\Pr[\neg S_3 | \neg S_1 \cap \neg S_2]...\Pr[\neg S_{n-2}|\neg S_1 \cap ... \cap \neg S_{n-1}]$
+
+$\geq (1-\frac{2}{n})(1-\frac{2}{n-2})(1-\frac{2}{n-2})...(1-\frac{1}{n-(n-4)})(1-\frac{1}{n-(n-3)})$
+
+$= \frac{n-2}{n}\frac{n-3}{n-1}...\frac{2}{4}\frac{1}{3}=\frac{2}{n(n-1)} \geq \frac{1}{n^2}$
+
+Problem:  
+low success probability!
+
+### Repeated Trials
+多試幾次，利用試驗的數量來讓probability不要那麼低
+
+Solution:  
+run the basic algorithm a large number $N$ times, remember the smallest cut found
+
+Question:  
+how many trials needed?
+
+Let $T_i$ = event that the cut (A, B) is found on the ith try.  
+=> by definition, different $T_i$'s are independent
+
+So:  
+$\Pr[\text{all N trials fail}] = \Pr[\neg T_1 \cap \neg T_2 \cap ... \cap \neg T_N] = \prod_{i=1}^N\Pr[\neg T_i] \leq (1-\frac{1}{n^2})^N$
+
+Calculus fact:  
+$1+x \leq e^x$  
+![Image](https://i.imgur.com/hW12bGk.png)
+
+So:  
+- if we take $N=n^2$, $\Pr[\text{all fail}] \leq (e^{-\frac{1}{n^2}})^{n^2}=\frac{1}{e}$
+- if we take $N=n^2\ln n$, $\Pr[\text{all fail}]\leq (\frac{1}{e})^{\ln n} = \frac{1}{n}$
+
+Running Time:  
+polynomial in $n, m$ but slow  
+but can get big speedups with more ideas! ($O(n^2)$)
+
+## The Number of Minimum Cuts
+Note:  
+a graph can have multiple min cuts  
+(a tree with n vertices has (n-1) minimum cuts)  
+![Image](https://i.imgur.com/ex53tBg.png)
+
+Question:  
+what's the largest number of min cuts that a graph with n vertices can have?  
+
+Answer:  
+$\begin{pmatrix}n\\2\end{pmatrix} = \frac{n(n-1)}{2}$
+
+### The Lower Bound
+Consider the n-cycle  
+![Image](https://i.imgur.com/0VpY0K5.png)
+
+Note:  
+each pair of the n edges defines a distinct minimum cut (with two crossing edges)  
+=> has $\geq \frac{n(n-1)}{2}$ min cuts
+
+每個node都可以跟其他(n-1)個node形成min cut，故全部的可能有$\frac{n(n-1)}{2}$種
+
+### The Upper Bound
+Let $(A_1, B_1), (A_2, B_2), ..., (A_+, B_+)$ be the min cuts of a graph with n vertices
+
+By the Contraction Algorithm analysis (without repeated trials):  
+$\Pr[\text{output}=(A_i, B_i)] \geq \frac{2}{n(n-1)} = \frac{1}{\begin{pmatrix}n\\2\end{pmatrix}}$  
+($\text{output}=(A_i, B_i)) = S_i$
+
+Note:  
+$S_i$'s are disjoint events (i.e., only one can happen)  
+=> their probabilities sum to at most 1
+
+機率全部相加最多為1
+
+Thus:  
+$\frac{+}{\begin{pmatrix}n\\2\end{pmatrix}} \leq 1$  
+$+ \leq \begin{pmatrix}n\\2\end{pmatrix}$
