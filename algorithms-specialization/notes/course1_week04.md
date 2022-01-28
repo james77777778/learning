@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Linear-Time Selection)
+Algorithm (Linear-Time Selection, Graphs, Contraction Algorithm)
 ===
 ## Problem
 Input:  
@@ -126,3 +126,46 @@ $\leq 2cn\Sigma_{\text{phase }j}(\frac{3}{4})^j$
 $\leq 8cn = O(n)$
 
 證明完畢！
+
+## Graphs
+- Verices (Nodes, V)
+- Edges (E): pairs of vertices
+    - can be undirected (unordered) / directed (ordered, arcs)
+    ![Image](https://i.imgur.com/gTVanwW.png)
+
+Examples:  
+road networks, the web
+
+### Cuts of Graphs
+Definition:  
+a cut of a graph (V, E) is a partition of V into two non-empty sets A and B
+![Image](https://i.imgur.com/Z5lruvj.png)
+
+Definition:  
+the crossing edges of a cut (A, B) are those with:
+- one endpoint in each of (A, B) (undirected)
+- tail in A, head in B (directed)
+
+A graph with $n$ vertices has $2^n$ cuts
+
+### The Minimum Cut Problem
+Input:  
+An undriected graph $G=(V, E)$, parallel edges allowed  
+![Image](https://i.imgur.com/GJH9iz0.png)
+
+Goal:  
+compute a cut with fewest number of crossing edges (min cut)
+
+![Image](https://i.imgur.com/Q8cWENL.png)
+
+A Few Applications:  
+- identify network bottlenecks
+- community detection
+- iamge segmentation
+
+### Graph Representation
+只考慮edge number，而非考慮minimu cuts
+![Image](https://i.imgur.com/HY1NAsD.png)
+
+- Adjacency Matrix
+- Adjacency Lists (後續課程主要使用這個資料結構)
