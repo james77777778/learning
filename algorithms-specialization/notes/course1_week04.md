@@ -327,3 +327,15 @@ $S_i$'s are disjoint events (i.e., only one can happen)
 Thus:  
 $\frac{+}{\begin{pmatrix}n\\2\end{pmatrix}} \leq 1$  
 $+ \leq \begin{pmatrix}n\\2\end{pmatrix}$
+
+## Problem Set
+3. Let $0.5 < \alpha < 1$ be some constant. Suppose you are looking for the median element in an array using RANDOMIZED SELECT (as explained in lectures). What is the probability that after the first iteration the size of the subarray in which the element you are looking for lies is $\leq \alpha$ times the size of the original array?  
+    ANS: $2\cdot \alpha - 1$  
+    原因是要找pivot落在合適的範圍，$p=1-(1-\alpha) - (1-\alpha)=2\cdot \alpha - 1$
+4. Let $0 < \alpha < 1$ be a constant, independent of $n$.  Consider an execution of RSelect in which you always manage to throw out at least a $1 - \alpha$ fraction of the remaining elements before you recurse.  What is the maximum number of recursive calls you'll make before terminating?  
+    ANS: $-\frac{\log n}{\log \alpha}$  
+    假設總共有$n$個元素，第一次call完有$\alpha n$個元素，在第$d$次call完會有$\alpha ^d n$個元素，假設到第$d$次結束則$\alpha ^d n \leq 1$  
+    則$d = -\frac{\log n}{\log \alpha}$
+5. Now suppose you are given an instance of the minimum cut problem -- that is, you are given an undirected graph (with no specially labelled vertices) and need to compute the minimum cut.  What is the minimum number of times that you need to call the given min s-t cut subroutine to guarantee that you'll find a min cut of the given graph?  
+    ANS: $n-1$  
+    Fix $s$ to be one of the vertex and $t$ varies across all others, then we are done by picking the smallest one, therefore we need at most $n−1$ call.
