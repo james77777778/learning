@@ -35,3 +35,11 @@ Run pytest in each subfolder in `./codes`.
     # or
     python3 quick_sort.py
     ```
+4. Minimum Cut (Random)
+    ```bash
+    cd algorithms-specialization\codes\course1_week4
+    pytest
+    # or
+    # iteration is set to 100, the final answer should be 17
+    python3 mincut.py
+    ```
