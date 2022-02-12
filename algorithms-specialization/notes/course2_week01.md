@@ -60,10 +60,53 @@ BFS(graph G, start vertex s)
 - Claim #2:
     running time of main while loop = $O(n+m)$
 
+### Application: Shortest Paths
+(DFS無法找到shortest paths)
+
+Goal:  
+compute $dist(v)$, the fewest number of edges on a path from $s$ to $v$
+
+Extra code:  
+```
+- initialize dist(v) = 0 if v = s / dist(v) = +inf if v != s
+- when considering edge (v, w):
+    - if w unexplored, then set dist(w) = dist(v) + 1
+```
+
+Claim:  
+at termination, $dist(v) = i$ <=> $v$ in $i^{\text{th}}$ layer
+
+Proof idea:  
+every layer-$i$ node $w$ is added to $Q$ by a layer-$(i-1)$ node $v$ via the edge $(v, w)$
+
+### Application: Undirected Connectivity
+Let $G=(V, E)$ be an undirected graph
+
+Connected components = the **pieces** of $G$
+
+Formal definition:  
+equivalence classes of the relation $u \sim v$ <=> $\exists u-v$ path in $G$
+
+Goal:  
+compute all connected components
+
+To compute all components (undirected case)
+```
+- all nodes unexplored (assume label from 1 to n)
+- for i=1 to n
+    - if i not yet explored
+        - BFS(G, i)
+```
+![Image](https://i.imgur.com/ETYKVKE.png)
+
+Running time:  
+$O(m+n)$
 
 ## Depth-First Search (DFS)
 - explore aggressively like a maze, backtrack only when necessary
 - compute topological ordering of directed acyclic graph
 - compute connected components in directed graphs
 - $O(m+n)$ time using a stack (LIFO)
+
+
 
