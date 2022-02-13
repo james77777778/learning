@@ -9,6 +9,10 @@
     - Week3: Quick Sort
     - Week4: Linear-Time Selection, Graphs, Contraction Algorithm
 2. Graph Search, Shortest Paths, and Data Structures
+    - Week1: Graph Search, Topological Sort, Strongly Connected Component
+    - Week2:
+    - Week3:
+    - Week4:
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
 
@@ -42,4 +46,9 @@ Run pytest in each subfolder in `./codes`.
     # or
     # iteration is set to 100, the final answer should be 17
     python3 mincut.py
+    ```
+5. Strongly Connected Component
+    ```bash
+    cd algorithms-specialization\codes\course2_week1
+    pytest
     ```

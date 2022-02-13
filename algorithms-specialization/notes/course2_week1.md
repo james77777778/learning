@@ -1,7 +1,7 @@
 ---
 tags: algorithms, notes
 ---
-Algorithm (Graph Search, Topological Sort, Computing Strong Components)
+Algorithm (Graph Search, Topological Sort, Strongly Connected Component)
 ===
 ## Generic Graph Search
 Goals:  
@@ -105,8 +105,78 @@ $O(m+n)$
 ## Depth-First Search (DFS)
 - explore aggressively like a maze, backtrack only when necessary
 - compute topological ordering of directed acyclic graph
-- compute connected components in directed graphs
+- compute strongly connected components of directed graphs
 - $O(m+n)$ time using a stack (LIFO)
 
+![Image](https://i.imgur.com/EwYkfxX.png)
 
+### Pseudocode
+Recursive version:  
+```
+DFS(graph G, start vertex s)
+- mark s as explored
+- for every edge (s, v):
+    - if v unexplored
+        - DFS(G, v)
+```
+
+### Basic Properties
+跟BFS完全一樣
+
+- Claim #1:  
+    at the end of DFS, $v$ explored <=> $G$ has a path from $s$ and $v$  
+    Reason:  
+    special case of the generic algorithm
+- Claim #2:
+    running time of main while loop = $O(n+m)$
+
+### Application: Topological Sort
+Definition:  
+a topological ordering of a directed graph G is a labelling $f$ of $G$'s nodes such that:  
+1. the $f(v)$'s are the set ${1, 2, ..., n}$
+2. $(u, v) \in G$ => $f(u) < f(v)$
+
+![Image](https://i.imgur.com/cCnhNGX.png)
+
+Note:  
+$G$ has directed cycle => no topological ordering  
+不能具有有向的迴圈，不然會造成無窮迴圈
+
+Motivation:  
+要排列一系列的tasks且有constrains時 (例如修課順序)
+
+**Straightforward Solution:**  
+Note:  
+every directed acyclic graph has a **sink vertex**
+
+Compute topological ordering:  
+```
+- let v be a sink vertex of G
+- set f(v) = n
+- recruse on G - {v}
+```
+![Image](https://i.imgur.com/FFFZHPm.png)
+
+**Topological Sort via DFS (Slick 光滑的)**
+```
+DFS-Loop(graph G)
+- mark all nodes unexplored
+- current_label = n (keep track of ordering)
+- for each vertex v in G:
+    - if v not yet explored
+        - DFS(G, v)
+```
+```
+DFS(graph G, start vertex s)
+- mark s as explored
+- for every edge (s, v):
+    - if v unexplored
+        - DFS(G, v)
+- set f(s) = current_label
+- current_label--
+```
+
+Running Time:  
+$O(m+n)$  
+($O(1)$ per node & $O(1)$ per edge)
 
