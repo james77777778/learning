@@ -180,3 +180,108 @@ Running Time:
 $O(m+n)$  
 ($O(1)$ per node & $O(1)$ per edge)
 
+## Strongly Connected Components
+Definition:  
+the strongly connected components (SCCs) of a directed graph $G$ are the equivalence classes of the relation  
+$u \sim v$ <=> $\exists \text{ path } u-v$ **and** $\text{ a path } v-u$ in $G$
+
+![Image](https://i.imgur.com/J4teDrx.png)
+
+### Why Depth-First Search?
+![Image](https://i.imgur.com/bEJAEUv.png)
+
+如果從紅色點開始，有機會找到SCC。但是如果從綠色點開始，則會找到錯誤的SCC。  
+使用DFS的**起點**會影響結果
+
+### Kosaraju's Two-Pass Algorithm
+Theorem:  
+can compute SCCs in $O(m+n)$ time
+
+Algorithm: (given directed graph)  
+```
+- let G^rev = G with all arcs reversed
+- run DFS-Loop on G^rev (goal: compute "magical ordering" of nodes)
+    - let f(v) = "finishing time" of each v in V
+- run DFS-Loop on G (goal: discover the SCCs 1-by-1)
+    - processing nodes in decreasing order of fininshing times
+```
+
+DFS-Loop
+```
+DFS-Loop(graph G)
+- global variable t=0 (# of nodes processed so far)
+- global variable s=NULL (current source vertex)
+- label nodes 1 to n
+- For i=n to 1
+    - If i not yet explored
+        - s = i
+        - DFS(G, i)
+```
+
+```
+DFS(graph G, node i)
+- mark i as explored (for rest of DFS-Loop)
+- set leader(i) = nodes
+- For each arc (i, j) in G:
+    - If j not yet explored:
+        - DFS(G, j)
+- t++
+- set f(i) = t
+```
+
+Example:  
+![Image](https://i.imgur.com/7KY7gpv.png)
+
+第一次的pass，先將arcs反轉後從node最大開始做DFS：  
+- 從node=9開始，走9-6-3之後死路，所以$f(3)=1$，因為第一個結束的。  
+- 再來從6開始走6-8-2-5之後死路，所以$f(5)=2$，依此類推。  
+- ...
+- 最後會得到所有的finishing time $f(v)$
+
+![Image](https://i.imgur.com/iuR5svV.png)
+
+第二次的pass，恢復原本的arcs，並從$f(v)$最大的開始做DFS：  
+- 9-7-8後死路，找到第一個SCC
+- 6-1-5後死路，找到第二個SCC
+- 4-2-3後死路，找到第三個SCC
+- 結束，找到所有的SCCs
+
+Running Time:  
+兩次的DFS = $O(m+n)$
+
+### 證明演算法 Observation
+Claim:  
+the SCCs of a directed graph induce an acyclic "meta-graph":  
+- meta-nodes = the SCCs ($C_1, ..., C_k$ of $G$)
+- $\exists \text{ arc } C \text{ -> } \hat{C}$ <=> $\exists \text{ arc } (i, j) \in G$ with $i\in C, j\in \hat{C}$
+
+![Image](https://i.imgur.com/i0k2Psi.png)
+
+Why acyclic?  
+a cycle of SCCs would collapse into one
+
+對於$G$和$G^{\text{rev}}$來說，SCCs是完全相同的
+
+### Key Lemma
+Lemma (引理):  
+consider two "adjacent" SCCs in $G$  
+![Image](https://i.imgur.com/GvyA1YB.png)
+
+let $f(v)$ = finishing times of DFS-Loop in $G^{\text{rev}}$  
+then $max_{v \in C_1} f(v) < max_{v \in C_2} f(v)$
+
+Corollary (推論):  
+maximum f-value of $G$ must lie in a "sink SCC"  
+![Image](https://i.imgur.com/VdHUCMh.png)
+
+### Correctness Intuition
+By Corollary:  
+2nd pass of DFS-Loop beings somewhere in a sink SCC $C^*$  
+=> first call to DFS discover $C^*$ and nothing else?  
+=> rest of DFS-Loop like recursing on $G$ with $C^*$ deleted  
+(starts in a sink node of $G-C^*$)  
+=> successive calls to $\text{DFS}(G, i)$ "peal off 剝離" the SCCs 1-by-1  
+(in reverse topological order of the "meta-graph" of SCCs)
+
+### Proof of Key Lemma
+![Image](https://i.imgur.com/1R0qnqX.png)
