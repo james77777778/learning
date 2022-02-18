@@ -285,3 +285,13 @@ By Corollary:
 
 ### Proof of Key Lemma
 ![Image](https://i.imgur.com/1R0qnqX.png)
+
+## Problems
+- ![Image](https://i.imgur.com/D7ygCyy.png)
+    [https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_5.html](https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_5.html)
+- ![Image](https://i.imgur.com/e5yBj5y.png)
+    [https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_30.html](https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_30.html)
+- ![Image](https://i.imgur.com/NctXCxG.png)
+    任何情況都有可能發生，所以選(4) 
+    - 例如1->2->3有3個SCCs，加上3->1則會變成只有1個SCCs
+    - 例如1->2->3有3個SCCs，加上1->3則還是有3個SCCs
