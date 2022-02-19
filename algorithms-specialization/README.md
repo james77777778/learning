@@ -4,13 +4,13 @@
 
 ## Courses
 1. Divide and Conquer, Sorting and Searching, and Randomized Algorithms
-    - Week1: Intro, Merge Sort, Guiding, Notations ($O, \Omega,\Theta$)
-    - Week2: Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair, Master Method
-    - Week3: Quick Sort
-    - Week4: Linear-Time Selection, Graphs, Contraction Algorithm
+    - [Week1](algorithms-specialization/notes/course1_week1.md): Intro, Merge Sort, Guiding, Notations ($O, \Omega,\Theta$)
+    - [Week2](algorithms-specialization/notes/course1_week2.md): Counting Inversions, Strassen's Subcubic Matrix Multiplication, Cloeset Pair, Master Method
+    - [Week3](algorithms-specialization/notes/course1_week3.md): Quick Sort
+    - [Week4](algorithms-specialization/notes/course1_week4.md): Linear-Time Selection, Graphs, Contraction Algorithm
 2. Graph Search, Shortest Paths, and Data Structures
-    - Week1: Graph Search, Topological Sort, Strongly Connected Component
-    - Week2:
+    - [Week1](algorithms-specialization/notes/course2_week1.md): Graph Search, Topological Sort, Strongly Connected Component
+    - [Week2](algorithms-specialization/notes/course2_week2.md): Dijkstra's Shortest Path Algorithm
     - Week3:
     - Week4:
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
@@ -41,7 +41,7 @@ Run pytest in each subfolder in `./codes`.
     ```
 4. Minimum Cut (Random)
     ```bash
-    cd algorithms-specialization\codes\course1_week4
+    cd algorithms-specialization/codes/course1_week4
     pytest
     # or
     # iteration is set to 100, the final answer should be 17
@@ -49,6 +49,6 @@ Run pytest in each subfolder in `./codes`.
     ```
 5. Strongly Connected Component
     ```bash
-    cd algorithms-specialization\codes\course2_week1
+    cd algorithms-specialization/codes/course2_week1
     pytest
     ```
