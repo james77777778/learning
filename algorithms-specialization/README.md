@@ -47,8 +47,13 @@ Run pytest in each subfolder in `./codes`.
     # iteration is set to 100, the final answer should be 17
     python3 mincut.py
     ```
-5. Strongly Connected Component
+5. Strongly Connected Component  
+    You should download dataset and place at `algorithms-specialization/codes/course2_week1/SCC.txt`.  
+    [dataset](http://www.algorithmsilluminated.org/datasets/problem8.10.txt)
     ```bash
+    # this might take some time due to large dataset `SCC.txt`
     cd algorithms-specialization/codes/course2_week1
     pytest
+    # or
+    python3 scc.py
     ```
