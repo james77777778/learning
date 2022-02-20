@@ -53,6 +53,7 @@ Run pytest in each subfolder in `./codes`.
     ```bash
     # this might take some time due to large dataset `SCC.txt`
     cd algorithms-specialization/codes/course2_week1
+    wget http://www.algorithmsilluminated.org/datasets/problem8.10.txt -O SCC.txt
     pytest
     # or
     python3 scc.py
