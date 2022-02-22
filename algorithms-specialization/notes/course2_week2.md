@@ -143,3 +143,12 @@ So:
 running time = $O(m\log n)$
 
 基本上跟sorting在同一個級距，非常快！
+
+## Problem Set
+![Image](https://i.imgur.com/29KyV0T.png)  
+- 可以用binary的概念想像
+
+![Image](https://i.imgur.com/N1xmnXW.png)  
+![Image](https://i.imgur.com/iEwk9tJ.png)  
+- 不管怎樣Dijkstra's algorithm一定會在$n-1$時結束，只是結果可能會是錯誤的。
+- 只要有negatvie cycle則沒辦法找到shortest path。
