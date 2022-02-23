@@ -11,7 +11,7 @@
 2. Graph Search, Shortest Paths, and Data Structures
     - [Week1](notes/course2_week1.md): Graph Search, Topological Sort, Strongly Connected Component
     - [Week2](notes/course2_week2.md): Dijkstra's Shortest Path Algorithm
-    - Week3:
+    - [Week3](notes/course2_week3.md): Heaps, Balanced Binary Search Trees
     - Week4:
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
