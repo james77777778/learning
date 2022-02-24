@@ -101,7 +101,7 @@ Extract-Min
 ![Image](https://i.imgur.com/c7Y2Bc7.png)  
 拿掉root時，將13作為新的root，違反了heap的性質，先將13與4交換(與較小的child交換，4<8)，再將13與4交換。
 
-## Binary Search Tree
+## Balanced Search Tree
 ### Sorted Arrays: Supported Operations
 |Operations|Running Time|
 |-|-|
@@ -111,8 +111,8 @@ Extract-Min
 |PRED/SUCC (given pointer to a key)|$O(1)$|
 |RANK (number of keys <= given value)|$O(\log n)$|
 |OUTPUT in SORTED ORDER|$O(n)$|
-|INSERT|? $O(n)$ 太慢了|
-|DELETE|? $O(n)$ 太慢了|
+|INSERT|$O(n)$ 太慢了|
+|DELETE|$O(n)$ 太慢了|
 
 ### Balanced Search Tree: Supported Operations
 基本上跟Sorted Array相同，但是有更快的INSERT與DELETE。
@@ -127,3 +127,34 @@ Extract-Min
 |OUTPUT in SORTED ORDER|$O(n)$|
 |INSERT|$O(\log n)$ 快很多|
 |DELETE|$O(\log n)$ 快很多|
+
+### Binary Search Tree Structure
+- exactly one node per key
+- each node has
+    1. left / right child pointer
+    2. parent pointer
+
+Search Tree Property:  
+![Image](https://i.imgur.com/xJu977Y.png)
+
+The Height of a BST:  
+height could be $\approx \log_2 n$ to $\approx n$
+
+![Image](https://i.imgur.com/Ta62Qv5.png)
+
+### Searching & Inserting
+```
+SEARCH (key k, tree T)
+- start at the root
+- traverse left (k < key) / right (k > key) child pointers
+- return node with key k or NULL
+```
+
+```
+INSERT (key k, tree T)
+- search for k (必須要失敗，代表沒有一樣的key)
+- rewire final NULL pointer to new node with key k
+```
+
+![Image](https://i.imgur.com/Ls8jgjZ.png)  
+最後一定會繼續保持search tree性質，只是不一定平衡
