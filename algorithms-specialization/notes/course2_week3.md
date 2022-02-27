@@ -158,3 +158,96 @@ INSERT (key k, tree T)
 
 ![Image](https://i.imgur.com/Ls8jgjZ.png)  
 最後一定會繼續保持search tree性質，只是不一定平衡
+
+### Min, Max, Pred and Succ
+```
+MIN
+- start at root
+- follow `left child pointers` until last key found
+```
+
+```
+MAX
+- start at root
+- follow `right child pointers` until last key found
+```
+
+```
+PREDECESSOR(key k)
+- if k's left subtree nonempty:
+    - return max key in left subtree
+- otherwise:
+    - follow parent pointers until get to a key less than k (first time `turn left`)
+```
+![Image](https://i.imgur.com/XhneR0X.png)
+
+### In-Order Traversal
+將key依序印出，由小到大
+
+```
+- let r = root of search tree, with subtrees T_L and T_R
+- recurse on T_L
+- print out r's key
+- recurse on T_R
+```
+![Image](https://i.imgur.com/LVKtJTG.png)
+
+Running Time: $O(n)$
+
+### Deletion
+```
+DELETE(key k)
+- search for k
+- (EASY CASE: k's node has no children)
+    - just delete k's node
+- (MEDIUM CASE: k's node has 1 child)
+    - just `splice out 對接` k's node
+- (DIFFICULT CASE: k's node has 2 children)
+    - compute k's predecessor l
+    - swap k & l!
+    - (k has no right child!) delete or splice out k node
+```
+![Image](https://i.imgur.com/N3EEy0Q.png)
+![Image](https://i.imgur.com/q71IFLa.png)
+
+Running Time: $O(\text{height})$
+
+### Select & Rank
+Idea:  
+store a little bit of extra info at each tree node **about the tree itself**
+
+Example:  
+size(x) = number of tree nodes in subtree rooted at x
+
+![Image](https://i.imgur.com/URlmJkz.png)
+
+if x has children y and z, then size(x) = size(y) + size(z) + 1
+
+```
+Select(ith order statistic)
+- start at root x, with children y & z
+- let a = size(y)
+- if a = i-1
+    - return x's key
+- if a >= i
+    - recursively compute ith order statistic of search tree rooted at y
+- if a < i-1
+    - recursively compute (i-a-1)th order statistic of search tree rooted at z
+```
+
+Running Time = $O(\text{height})$
+
+## Problem Set
+![Image](https://i.imgur.com/xyGA1MR.png)  
+如果新加入的數字是最大的，則需要掃過全部的$n$，$O(n)$
+
+![Image](https://i.imgur.com/41JPLrm.png)  
+因為是unsorted array，所以新加入的數字可以隨便加，$O(1)$
+
+![Image](https://i.imgur.com/p0a84M8.png)  
+直接做5次的Extract-Min，所以可以在constant time做完。  
+[https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_86.html](https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_86.html)
+
+![Image](https://i.imgur.com/5KuKR9p.png)  
+A chain with four nodes is a counterexample.  
+[https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_75.html](https://andrew-exercise.blogspot.com/2015/11/algorithms-design-and-analysis-part-1_75.html)
