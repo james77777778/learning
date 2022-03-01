@@ -15,9 +15,9 @@ class Graph:
     def print_graph(self):
         for v in self.vertices:
             adj_nodes = self.adjacency_list[v]
-            print(f'{v} -> {adj_nodes}')
+            print(f"{v} -> {adj_nodes}")
 
-    def reverse_graph(self) -> 'Graph':
+    def reverse_graph(self) -> "Graph":
         rev_g = Graph()
         for v, adj_nodes in self.adjacency_list.items():
             for w in adj_nodes:
@@ -25,7 +25,7 @@ class Graph:
         return rev_g
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     g = Graph()
     g.add_edge(1, 7)
     g.add_edge(7, 4)
@@ -39,9 +39,9 @@ if __name__ == '__main__':
     g.add_edge(2, 5)
     g.add_edge(5, 8)
 
-    print('Graph:')
+    print("Graph:")
     g.print_graph()
 
-    print('Reversed Graph:')
+    print("Reversed Graph:")
     rev_g = g.reverse_graph()
     rev_g.print_graph()

@@ -54,7 +54,7 @@ class MinCutGraph:
         nodes = self.adjacent_list.keys()
         nodes = sorted(nodes)
         for n in nodes:
-            print(f'{n}: {self.adjacent_list[n]}')
+            print(f"{n}: {self.adjacent_list[n]}")
 
     def mincut(self, random_seed: int = None) -> int:
         if random_seed:
@@ -78,10 +78,10 @@ class MinCutGraph:
             return len(v), cur_adjacent_list.keys()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     iterations = 100
 
-    with open('kargerMinCut.txt', 'r') as f:
+    with open("kargerMinCut.txt", "r") as f:
         raw_adjacent_list = read_adjacent_list(f)
 
     graph = MinCutGraph(raw_adjacent_list)
@@ -89,6 +89,6 @@ if __name__ == '__main__':
     min_cut = len(graph._get_all_distinct_edges(graph.adjacent_list))
     for idx in range(iterations):
         cut, super_vertices = graph.mincut()
-        print(f'Index: {idx: <4}, Cut: {cut: <5}, Super Vertices: {super_vertices}, Min Cut: {min_cut}')
+        print(f"Index: {idx: <4}, Cut: {cut: <5}, Super Vertices: {super_vertices}, Min Cut: {min_cut}")
         min_cut = min(cut, min_cut)
     print(min_cut)

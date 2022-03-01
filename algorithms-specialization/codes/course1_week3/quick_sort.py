@@ -62,7 +62,9 @@ def quick_sort_with_first_pivot(arr, n, comp_count) -> Tuple[List[int], int]:
     arr, new_idx_pivot = partition(arr, pivot, idx_pivot)
 
     arr[:new_idx_pivot], left = quick_sort_with_first_pivot(arr[:new_idx_pivot], len(arr[:new_idx_pivot]), comp_count)
-    arr[new_idx_pivot + 1:], right = quick_sort_with_first_pivot(arr[new_idx_pivot + 1:], len(arr[new_idx_pivot + 1:]), comp_count)
+    arr[new_idx_pivot + 1 :], right = quick_sort_with_first_pivot(
+        arr[new_idx_pivot + 1 :], len(arr[new_idx_pivot + 1 :]), comp_count
+    )
 
     return arr, n - 1 + left + right  # at this level: n - 1 (without pivot) and add two subarray results
 
@@ -75,7 +77,9 @@ def quick_sort_with_last_pivot(arr, n, comp_count) -> Tuple[List[int], int]:
     arr, new_idx_pivot = partition(arr, pivot, idx_pivot)
 
     arr[:new_idx_pivot], left = quick_sort_with_last_pivot(arr[:new_idx_pivot], len(arr[:new_idx_pivot]), comp_count)
-    arr[new_idx_pivot + 1:], right = quick_sort_with_last_pivot(arr[new_idx_pivot + 1:], len(arr[new_idx_pivot + 1:]), comp_count)
+    arr[new_idx_pivot + 1 :], right = quick_sort_with_last_pivot(
+        arr[new_idx_pivot + 1 :], len(arr[new_idx_pivot + 1 :]), comp_count
+    )
 
     return arr, n - 1 + left + right  # at this level: n - 1 (without pivot) and add two subarray results
 
@@ -87,13 +91,17 @@ def quick_sort_with_median_of_three_pivot(arr, n, comp_count) -> Tuple[List[int]
     pivot, idx_pivot = choose_median_of_three_as_pivot(arr, n)
     arr, new_idx_pivot = partition(arr, pivot, idx_pivot)
 
-    arr[:new_idx_pivot], left = quick_sort_with_median_of_three_pivot(arr[:new_idx_pivot], len(arr[:new_idx_pivot]), comp_count)
-    arr[new_idx_pivot + 1:], right = quick_sort_with_median_of_three_pivot(arr[new_idx_pivot + 1:], len(arr[new_idx_pivot + 1:]), comp_count)
+    arr[:new_idx_pivot], left = quick_sort_with_median_of_three_pivot(
+        arr[:new_idx_pivot], len(arr[:new_idx_pivot]), comp_count
+    )
+    arr[new_idx_pivot + 1 :], right = quick_sort_with_median_of_three_pivot(
+        arr[new_idx_pivot + 1 :], len(arr[new_idx_pivot + 1 :]), comp_count
+    )
 
     return arr, n - 1 + left + right  # at this level: n - 1 (without pivot) and add two subarray results
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     arr = [3, 2, 8, 5, 1, 4, 7, 6]
     print(arr)
     arr, num_comp = quick_sort_with_first_pivot(arr, len(arr), 0)
@@ -102,33 +110,33 @@ if __name__ == '__main__':
 
     # assignment 1
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue
             arr.append(int(line.strip()))
 
     arr, num_comp = quick_sort_with_first_pivot(arr, len(arr), 0)
-    print(f'first {num_comp}')
+    print(f"first {num_comp}")
 
     # assignment 2
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue
             arr.append(int(line.strip()))
 
     arr, num_comp = quick_sort_with_last_pivot(arr, len(arr), 0)
-    print(f'last {num_comp}')
+    print(f"last {num_comp}")
 
     # assignment 3
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue
             arr.append(int(line.strip()))
 
     arr, num_comp = quick_sort_with_median_of_three_pivot(arr, len(arr), 0)
-    print(f'median of three {num_comp}')
+    print(f"median of three {num_comp}")

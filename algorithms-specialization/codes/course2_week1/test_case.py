@@ -24,9 +24,9 @@ def test_easy():
 
 def test_assignment():
     g = Graph()
-    with open('SCC.txt', 'r') as f:
+    with open("SCC.txt", "r") as f:
         for line in f:
-            edge = line.strip().split(' ')
+            edge = line.strip().split(" ")
             edge = [int(n) for n in edge]
             v, w = edge
             g.add_edge(v, w)

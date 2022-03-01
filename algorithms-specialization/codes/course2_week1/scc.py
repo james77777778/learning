@@ -78,7 +78,7 @@ def get_sorted_size_of_sccs(sccs: List[List[int]]):
     return sccs_sizes[:5]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # sample graph
     g = Graph()
     g.add_edge(1, 7)
@@ -96,13 +96,13 @@ if __name__ == '__main__':
     sccs = compute_sccs(g)
     sccs_sizes = get_sorted_size_of_sccs(sccs)
     print(sccs)
-    print(f'size of 5 largest scc: {sccs_sizes}')
+    print(f"size of 5 largest scc: {sccs_sizes}")
 
     # assignment
     g = Graph()
-    with open('SCC.txt', 'r') as f:
+    with open("SCC.txt", "r") as f:
         for line in f:
-            edge = line.strip().split(' ')
+            edge = line.strip().split(" ")
             edge = [int(n) for n in edge]
             v, w = edge
             g.add_edge(v, w)
@@ -110,4 +110,4 @@ if __name__ == '__main__':
     sccs = compute_sccs(g)
     sccs_sizes = get_sorted_size_of_sccs(sccs)
 
-    print(f'size of 5 largest scc: {sccs_sizes}')
+    print(f"size of 5 largest scc: {sccs_sizes}")

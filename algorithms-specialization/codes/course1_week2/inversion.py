@@ -46,9 +46,9 @@ def sort_and_count_inversion(arr, n) -> Tuple[List[int], int]:
     return d_arr, x + y + z
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     arr = []
-    with open('IntegerArray.txt', 'r') as f:
+    with open("IntegerArray.txt", "r") as f:
         for line in f:
             if line.strip().isdecimal():
                 arr.append(int(line))

@@ -1,8 +1,4 @@
-from quick_sort import (
-    quick_sort_with_first_pivot,
-    quick_sort_with_last_pivot,
-    quick_sort_with_median_of_three_pivot
-)
+from quick_sort import quick_sort_with_first_pivot, quick_sort_with_last_pivot, quick_sort_with_median_of_three_pivot
 
 
 def test_easy():
@@ -15,7 +11,7 @@ def test_easy():
 
 def test_assignment_1():
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue
@@ -28,7 +24,7 @@ def test_assignment_1():
 
 def test_assignment_2():
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue
@@ -41,7 +37,7 @@ def test_assignment_2():
 
 def test_assignment_3():
     arr = []
-    with open('QuickSort.txt', 'r') as f:
+    with open("QuickSort.txt", "r") as f:
         for line in f:
             if len(line.strip()) < 1:
                 continue

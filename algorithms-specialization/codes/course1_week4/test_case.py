@@ -3,7 +3,7 @@ from min_cut import read_adjacent_list, MinCutGraph
 
 def test_easy():
     iterations = 5
-    with open('test.txt', 'r') as f:
+    with open("test.txt", "r") as f:
         raw_adjacent_list = read_adjacent_list(f)
     graph = MinCutGraph(raw_adjacent_list)
 
@@ -18,7 +18,7 @@ def test_easy():
 def test_assignment():
     answer = 17
     iterations = 200
-    with open('kargerMinCut.txt', 'r') as f:
+    with open("kargerMinCut.txt", "r") as f:
         raw_adjacent_list = read_adjacent_list(f)
     graph = MinCutGraph(raw_adjacent_list)
 
