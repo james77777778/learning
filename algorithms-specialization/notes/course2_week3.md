@@ -237,6 +237,46 @@ Select(ith order statistic)
 
 Running Time = $O(\text{height})$
 
+## Red-Black Trees
+### Red-Black Invariants
+1. each node **red** or **black** (因為當時paper的印刷技術只支援很少數的顏色)
+2. root is **black**
+3. no 2 reds in a row (red node => only black children)
+4. every root-NULL path (unsuccessful search) has same number of black nodes  
+    從root開始，走到leaf的路徑為root-NULL path
+
+### Examples
+Claim:  
+a chain of length 3 cannot be a red-black tree
+
+Proof:  
+![Image](https://i.imgur.com/Z7ags41.png)  
+- 搜尋0，則會得到1個black node (1)
+- 搜尋4，則會得到2個black nodes (1, 3)
+
+![Image](https://i.imgur.com/url0eRT.png)  
+![Image](https://i.imgur.com/ss9bh6m.png)
+
+### Height Guarantee
+Claim:  
+every red-black tree with $n$ nodes has $\text{height} \leq 2\log_2(n+1)$
+
+Proof:  
+observation: if every root-NULL path has $\geq k$ nodes, then tree includes a perfectly balanced search tree of depth $k-1$
+
+![Image](https://i.imgur.com/TTt615A.png)
+
+size $n \geq 2^k-1$ where $k=$ minumum number of nodes on root-NULL path
+
+Thus:  
+in a red-black tree with $n$ nodes, there is a root-NULL path with at most $\log_2(n+1)$ black nodes
+
+By 4th invariants:  
+every root-NULL path has $\leq \log_2(n+1)$ black nodes
+
+By 3rd invariants:  
+every root-NULL path has $\leq 2\log_2(n+1)$ total nodes
+
 ## Problem Set
 ![Image](https://i.imgur.com/xyGA1MR.png)  
 如果新加入的數字是最大的，則需要掃過全部的$n$，$O(n)$
