@@ -1,6 +1,10 @@
 # My Learning Records
 The codes are mostly wirtten by python3.8 with pytest.
 
+- Python
+    - Linter: flake8
+    - Formatter: black
+
 ## KaTex GitHub Chrome Extension
 You should use following extension to render latex codes in *.md
 
