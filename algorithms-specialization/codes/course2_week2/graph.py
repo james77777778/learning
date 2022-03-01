@@ -15,10 +15,10 @@ class WeightedDirectedGraph:
     def print_graph(self):
         for v in self.vertices:
             adj_nodes_with_weight = self.adjacency_list[v]
-            print(f"{v} -> {adj_nodes_with_weight}")
+            print(f'{v} -> {adj_nodes_with_weight}')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     g = WeightedDirectedGraph()
     g.add_edge(1, 2, 1)
     g.add_edge(1, 3, 4)
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     g.add_edge(2, 4, 6)
     g.add_edge(3, 4, 3)
 
-    print("WeightedDirectedGraph:")
-    print("ex: s -> [(v1, v1 weight), ...]")
+    print('WeightedDirectedGraph:')
+    print('ex: s -> [(v1, v1 weight), ...]')
     print()
     g.print_graph()

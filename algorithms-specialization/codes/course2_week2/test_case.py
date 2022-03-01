@@ -19,12 +19,12 @@ def test_easy():
 
 def test_assignment():
     g = WeightedDirectedGraph()
-    with open("dijkstraData.txt", "r") as f:
+    with open('dijkstraData.txt', 'r') as f:
         for line in f:
-            data = line.strip().split("\t")
+            data = line.strip().split('\t')
             v = int(data[0])
             for adj in data[1:]:
-                w, weight = adj.split(",")
+                w, weight = adj.split(',')
                 w, weight = int(w), int(weight)
                 g.add_edge(v, w, weight)
 
@@ -32,6 +32,6 @@ def test_assignment():
     a, _ = dijkstra_shortest_path(g, source_vertex)
     targets = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
     res = [str(a[t]) for t in targets]
-    res_string = ",".join(res)
+    res_string = ','.join(res)
 
-    assert res_string == "2599,2610,2947,2052,2367,2399,2029,2442,2505,3068"
+    assert res_string == '2599,2610,2947,2052,2367,2399,2029,2442,2505,3068'

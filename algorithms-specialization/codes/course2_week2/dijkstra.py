@@ -42,7 +42,7 @@ def dijkstra_shortest_path(g: WeightedDirectedGraph, source: int):
     return a, b
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     # sample graph
     g = WeightedDirectedGraph()
     g.add_edge(1, 2, 1)
@@ -58,12 +58,12 @@ if __name__ == "__main__":
 
     # assignment
     g = WeightedDirectedGraph()
-    with open("dijkstraData.txt", "r") as f:
+    with open('dijkstraData.txt', 'r') as f:
         for line in f:
-            data = line.strip().split("\t")
+            data = line.strip().split('\t')
             v = int(data[0])
             for adj in data[1:]:
-                w, weight = adj.split(",")
+                w, weight = adj.split(',')
                 w, weight = int(w), int(weight)
                 g.add_edge(v, w, weight)
 
@@ -71,10 +71,10 @@ if __name__ == "__main__":
     a, b = dijkstra_shortest_path(g, source_vertex)
 
     targets = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
-    print(f"Targets: {targets}")
-    print("Assignment result:")
+    print(f'Targets: {targets}')
+    print('Assignment result:')
     res = [str(a[t]) for t in targets]
-    print(",".join(res))
+    print(','.join(res))
 
     for t in targets:
         print(b[t])
