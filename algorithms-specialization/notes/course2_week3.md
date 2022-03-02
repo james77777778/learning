@@ -268,6 +268,8 @@ observation: if every root-NULL path has $\geq k$ nodes, then tree includes a pe
 
 size $n \geq 2^k-1$ where $k=$ minumum number of nodes on root-NULL path
 
+(假設$k=3$，代表每個path有至少3個black nodes，所以$n$必定大於等於$2^k-1=7$)
+
 Thus:  
 in a red-black tree with $n$ nodes, there is a root-NULL path with at most $\log_2(n+1)$ black nodes
 
@@ -276,6 +278,45 @@ every root-NULL path has $\leq \log_2(n+1)$ black nodes
 
 By 3rd invariants:  
 every root-NULL path has $\leq 2\log_2(n+1)$ total nodes
+
+### Rotations
+Idea:  
+locally rebalance subtrees at a node in $O(1)$ time
+
+Left Rotation:  
+![Image](https://i.imgur.com/AGeu58s.png)  
+- A: 比x小
+- B: 在x與y之間
+- C: 比y大
+
+Right Rotation:  
+![Image](https://i.imgur.com/H9LZE7F.png)
+
+只要交換pointer即可，因此為$O(1)$時間
+
+### Insertion in a Red-Black Tree
+```
+Insert(x)
+- insert x as usual (x as a leaf)
+- try coloring x red
+- if x's parent y is black
+    - done
+- else y is red
+    - y has a black parent w
+    ...
+```
+
+1. the other child z of x's grandparent w is also red  
+    ![Image](https://i.imgur.com/NVVOi76.png)  
+    => recolor y, z black and w red  
+    (key point: does not break invariant 4)  
+    => either restores invariant 3 or propagate the double red upward  
+    => 如果跑到root了，再把root重新塗成black來符合invariant 2
+    => can only happen $O(\log n)$ time
+
+2. the other child z of x's grandparent w is black    
+    ![Image](https://i.imgur.com/mxjFd7j.png)
+    => 利用2~3次rotations + recoloring即可在$O(1)$ time解決 (練習)
 
 ## Problem Set
 ![Image](https://i.imgur.com/xyGA1MR.png)  
