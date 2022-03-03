@@ -57,7 +57,7 @@ class MinHeap(Heap):
         parent_idx = 1
         while parent_idx <= self.length:
             child1_idx, child2_idx = self._get_child_idxs(parent_idx)
-            if child1_idx >= self.length:
+            if child1_idx > self.length:
                 break
             elif child2_idx > self.length:
                 child1_key = self.data[child1_idx][0]
@@ -100,7 +100,7 @@ class MaxHeap(Heap):
         parent_idx = 1
         while parent_idx <= self.length:
             child1_idx, child2_idx = self._get_child_idxs(parent_idx)
-            if child1_idx >= self.length:
+            if child1_idx > self.length:
                 break
             elif child2_idx > self.length:
                 child1_key = self.data[child1_idx][0]
