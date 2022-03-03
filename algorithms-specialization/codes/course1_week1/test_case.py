@@ -1,4 +1,4 @@
-from .karatsuba import multiply_karatsuba
+from karatsuba import multiply_karatsuba
 
 
 def test_easy():

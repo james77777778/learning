@@ -1,6 +1,6 @@
 from typing import List
 
-from .graph import Graph
+from graph import Graph
 
 
 def get_finishing_order_by_dfs(g: Graph) -> List[int]:

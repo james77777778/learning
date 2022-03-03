@@ -1,4 +1,4 @@
-from .min_cut import read_adjacent_list, MinCutGraph
+from min_cut import read_adjacent_list, MinCutGraph
 
 
 def test_easy():

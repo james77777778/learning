@@ -1,5 +1,5 @@
-from .graph import WeightedDirectedGraph
-from .dijkstra import dijkstra_shortest_path
+from graph import WeightedDirectedGraph
+from dijkstra import dijkstra_shortest_path
 
 
 def test_easy():

@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from .graph import WeightedDirectedGraph
+from graph import WeightedDirectedGraph
 
 
 INF_DISTANCE = 1000000
