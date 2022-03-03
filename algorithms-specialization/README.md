@@ -12,13 +12,15 @@
     - [Week1](notes/course2_week1.md): Graph Search, Topological Sort, Strongly Connected Component
     - [Week2](notes/course2_week2.md): Dijkstra's Shortest Path Algorithm
     - [Week3](notes/course2_week3.md): Heaps, Balanced Binary Search Trees
-    - Week4:
+    - [Week4](notes/course2_week4.md): Hashing, Bloom Filters
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
 
 ## Codes
 - Python3.8
 - pytest
+- flake8
+- black
 
 ## Usage
 Run pytest in each subfolder in `./codes`.
@@ -57,4 +59,16 @@ Run pytest in each subfolder in `./codes`.
     pytest
     # or
     python3 scc.py
+    ```
+6. Dijkstra's Shortest Path  
+    ```bash
+    cd algorithms-specialization/codes/course2_week2
+    pytest
+    # or
+    python3 dijkstra.py
+    ```
+7. Median Maintenance  
+    ```bash
+    cd algorithms-specialization/codes/course2_week3
+    python3 median_maintenance.py
     ```
