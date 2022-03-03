@@ -1,4 +1,4 @@
-from quick_sort import quick_sort_with_first_pivot, quick_sort_with_last_pivot, quick_sort_with_median_of_three_pivot
+from .quick_sort import quick_sort_with_first_pivot, quick_sort_with_last_pivot, quick_sort_with_median_of_three_pivot
 
 
 def test_easy():

@@ -1,4 +1,4 @@
-from inversion import sort_and_count_inversion
+from .inversion import sort_and_count_inversion
 
 
 def test_easy():

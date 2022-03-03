@@ -1,5 +1,5 @@
-from graph import Graph
-from scc import compute_sccs, get_sorted_size_of_sccs
+from .graph import Graph
+from .scc import compute_sccs, get_sorted_size_of_sccs
 
 
 def test_easy():
