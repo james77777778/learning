@@ -2,6 +2,8 @@ from typing import List, Tuple, Any
 
 
 class Heap:
+    '''Heap structure that index of 1, ..., n by adding dummy data first'''
+
     def __init__(self):
         self.data: List[Tuple[int, Any]] = [(0, 0)]  # 1 dummy
 
