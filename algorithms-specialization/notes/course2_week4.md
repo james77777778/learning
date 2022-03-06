@@ -86,3 +86,86 @@ How to choose $n$ (number of buckets)?
 1. n to be a prime
 2. not too close to a power of 2
 3. not too close to a power of 10
+
+## Universal Hashing
+### The Load of a Hash Tabel
+Definition:  
+the load factor of a hash table is  
+$\alpha = \frac{\text{number of objects in hash table}}{\text{number of buckets of hash table}}$
+
+Note:  
+1. $\alpha = O(1)$ is necessary condition for operations to run in constant time
+2. with open addressing, need $\alpha << 1$
+
+### Pathological Data Sets
+For every hash function, there is a pathological data set
+
+Reason:  
+fix a hash function $h:U \to \{0, 1, ..., n-1\}$  
+By Pigeonhole Priciple, $\exists \text{bucket } i$ such that at least $\frac{|u|}{n}$ elements of $u$ hash to $i$ under $h$  
+只要把現在的buckets塞滿，之後就會一直有collisions
+
+Solutions:  
+1. use a cryptographic hash function (e.g., SHA-2)
+    - infeasible to reverse engineer a pathological data set
+2. use randomization
+    - design a family $H$ of hash functions such that, $\forall$ data sets $S$, **almost all** functions $h \in H$ spread $S$ out **pretty evenly**
+    - 在程式runtime中，隨機挑選$h$來避免逆向工程
+
+### Universal Hash Functions
+Definition:  
+Let $H$ be a set of hash functions from $u$ to $\{0, 1, 2, ..., n-1\}$  
+$H$ is universal if and only if:  
+for all $x, y \in u$,  
+$\Pr_{h \in H}[x, y \text{ collide}] \leq \frac{1}{n}$  
+($n=$ number of buckets)  
+where $h$ is chosen uniformly at random from $H$
+
+![Image](https://i.imgur.com/sFDIHjg.png)  
+- Yes: Take $H=$ all functions from $u$ to $\{0, 1, ..., n-1\}$
+- No: Take $H=$ the set of $n$ differnet constant functions  
+    譬如$h(x) = 10$
+
+### Example: Hashing IP Addresses
+Let $u=$ IP addresses (of the form $(x_1, x_2, x_3, x_4)$ with each $x_i \in \{0, 1, ..., 255\}$)  
+Let $n=$ a prime  
+
+Construction:  
+Define 1 hash function $h_a$ per 4-tuple $a=(a_1, a_2, a_3, a_4)$ with each $a_i \in \{0, 1, ..., n-1\}$
+
+Define:  
+$h_a$: IP address -> buckets by $h_a(x_1, x_2, x_3, x_4) = (a_1x_1+a_2x_2+a_3x_3+a_4x_4) \mod n$  
+$H=\{h_a|a_1, a_2, a_3, a_4 \in \{0, 1, ..., n-1\}\}$
+
+Theorem:  
+This family is universal
+
+#### Proof (Part I)  
+consider distinct IP addresses $(x, y)$
+
+Assume:  
+$x_4 \neq y_4$
+
+Question:  
+collisions probability?
+
+Note:  
+collision <=> $a_1x_1+a_2x_2+a_3x_3+a_4x_4=a_1y_1+a_2y_2+a_3y_3+a_4y_4$  
+<=> $a_4(x_4-y_4) \mod n = \Sigma_{i=1}^3a_i(y_i-x_i) \mod n$
+
+Next:  
+condition on random choices of $a_1, a_2, a_3$
+
+#### Proof (Part II)
+with $a_1, a_2, a_3$ fixed arbitrarily, how many choices of $a_4$ satisfy $a_4(x_4-y_4) \mod n = \Sigma_{i=1}^3a_i(y_i-x_i) \mod n$ ?
+
+![Image](https://i.imgur.com/i2QpEZp.png)
+
+Key Claim:  
+left-hand side equally likely to be any of $\{0, 1, 2, ..., n-1\}$, implies $\Pr[h_a(x) = h_a(y)] = \frac{1}{n}$
+
+Reason:  
+$x_4 \neq y_4$ ($x_4 - y_4 \neq 0$), $n$ is prime, $a_4$ uniform at random
+
+Proof by example:  
+$n=7, x_4-y_4=2 \text{ or } 3 \mod n$
