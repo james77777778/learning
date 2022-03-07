@@ -103,7 +103,7 @@ For every hash function, there is a pathological data set
 Reason:  
 fix a hash function $h:U \to \{0, 1, ..., n-1\}$  
 By Pigeonhole Priciple, $\exists \text{bucket } i$ such that at least $\frac{|u|}{n}$ elements of $u$ hash to $i$ under $h$  
-只要把現在的buckets塞滿，之後就會一直有collisions
+只要發現collisions，就可以一直重複塞同樣資料，來產生非常多collisions
 
 Solutions:  
 1. use a cryptographic hash function (e.g., SHA-2)
@@ -115,11 +115,12 @@ Solutions:
 ### Universal Hash Functions
 Definition:  
 Let $H$ be a set of hash functions from $u$ to $\{0, 1, 2, ..., n-1\}$  
-$H$ is universal if and only if:  
+$H$ is **universal** if and only if:  
 for all $x, y \in u$,  
 $\Pr_{h \in H}[x, y \text{ collide}] \leq \frac{1}{n}$  
 ($n=$ number of buckets)  
-where $h$ is chosen uniformly at random from $H$
+where $h$ is chosen uniformly at random from $H$  
+對於每個$h$，所有的$x,y$相撞的機率都會$\leq \frac{1}{n}$
 
 ![Image](https://i.imgur.com/sFDIHjg.png)  
 - Yes: Take $H=$ all functions from $u$ to $\{0, 1, ..., n-1\}$
@@ -169,3 +170,93 @@ $x_4 \neq y_4$ ($x_4 - y_4 \neq 0$), $n$ is prime, $a_4$ uniform at random
 
 Proof by example:  
 $n=7, x_4-y_4=2 \text{ or } 3 \mod n$
+
+### Open Addressing
+1 object per slot, hash function produces a probe sequence for each possible key x
+
+Fact:  
+difficult to analyze rigorously 嚴格的
+
+#### Heuristic Analysis
+Heuristic assumption (沒有證明):  
+all $n!$ probe sequences equally likely
+
+Observation:  
+under heuristic assumption, expected INSERT time is $\approx \frac{1}{1-\alpha}$, where $\alpha=$ load
+
+Proof:  
+A random probe finds an empty slot with probability $1-\alpha$
+
+So:  
+INSERT time $\approx$ the number $N$ of coin flips to get **heads**, where $\Pr[\text{heads}] = 1-\alpha$
+
+Note:  
+$E[N] = 1+\alpha E[N]$ (第一次就中head，加上$\alpha$乘上下一次中head)  
+=> $E[N] = \frac{1}{1-\alpha}$
+
+#### Linear Probing
+Note:  
+heuristic assumption completely false
+
+Assume instead:  
+initial probe uniformly random, independent for different keys
+
+Theorem (Knuth 1962):  
+under above assumption, expected INSERT time is $\approx \frac{1}{(1-\alpha)^2}$, where $\alpha = \text{load}$
+
+#### 補充
+以下內容來自網路 `algorithms-specialization/complementary/hash_table.pdf`
+
+一旦發生碰撞，就往下一位置探測，如果下一位置仍然被占用，則繼續往下搜尋，直到找空白的位置為止  
+以線性探測的方式存放資料，搜尋資料時會發生三種可能的情形如下：
+1. 經雜湊函數計算位置後，資料值與鍵值相同，表示搜尋成功。
+2. 資料值與鍵值不相同，所以繼續往下探測，直到搜尋成功為止。
+3. 在搜尋過程中遇到空白位置，這就表示搜尋失敗。
+
+當資料值若集中在某一區段，則每次該區段資料值插入時，發生碰撞的頻率將會快速增加，這種現象稱之為叢集（cluster）。
+
+## Bloom Filters
+### Supported Operations
+Fast INSERT & LOOKUP
+
+Comparison to Hash Table:  
+- Pros: move space efficient
+- Cons:
+    1. can't store an associated object
+    2. no deletions
+    3. small false positive probability (might say $x$ has been INSERTed even though it hasn't been)
+
+### Applications
+- Early: spellcheckers (利用預先建好的超大詞庫來檢查是否有typo)
+- Canonical 典範: list of forbidden passwords
+- Modern: network routers
+    - limited memory, need to be super-fast
+
+### Under the Hood 本質上
+Ingredients:  
+1. array of $n$ bits (so $\frac{n}{|s|} = $ number of bits per object in dataset $S$)
+2. $k$ hash functions $h_1, ..., h_k$ ($k=$ small constant)
+
+```
+INSERT(key x)
+- for i=1, 2, ..., k
+    - set A[h_i(x)] = 1 (不管之前有沒有設過，都設成1)
+```
+
+```
+LOOKUP(key x)
+- if A[h_i(x)] = 1 for every i=1, 2, ..., k
+    - return True
+```
+
+譬如說有3個hash functions $h_1, h_2, h_3$:
+- $h_1(x) = x \mod 3$
+- $h_2(x) = x \mod 5$
+- $h_3(x) = x \mod 7$
+
+若輸入$x=10$，則同時把$A[1], A[0], A[3]$設為$1$，  
+若查詢$x=10$，只要同時檢查$A[1], A[0], A[3]$是否為$1$即可  
+(代價就是查詢可能會有false positive，即沒有$x=10$在裡面，但bloom filters卻說有)
+
+- 如果 Bloom Filter 回傳沒有（negative）：代表資料**一定沒有**在Bloom Filter中
+- 如果 Bloom Filter 回傳有（positive）：代表資料**可能有**在Bloom Filter中，並**不是一定有**在Bloom Filter中
