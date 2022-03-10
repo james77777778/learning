@@ -259,4 +259,34 @@ LOOKUP(key x)
 (代價就是查詢可能會有false positive，即沒有$x=10$在裡面，但bloom filters卻說有)
 
 - 如果 Bloom Filter 回傳沒有（negative）：代表資料**一定沒有**在Bloom Filter中
-- 如果 Bloom Filter 回傳有（positive）：代表資料**可能有**在Bloom Filter中，並**不是一定有**在Bloom Filter中
+- 如果 Bloom Filter 回傳有（positive）：代表資料**可能有**在Bloom Filter中，並**不是一定有**在Bloom Filter中 (有可能被其他$x$設過$h_i(x)=1$了)
+
+### Heuristic Analysis
+Assume:  
+all $h_i(x)$'s uniformly random and independent (across different i's and x's)  
+現實中其實不太容易實現
+
+Setup:  
+$n$ bits, insert data set $S$ into bloom filter  
+
+假設bloom filter有$n$ bits且插入了$S$個資料在有$k$個hash functions的情況下：  
+其中1個bit還維持是$0$的機率為$(1-\frac{1}{n})^{k|S|}$  
+false positive的機率就會是$(1-(1-\frac{1}{n})^{k|S|})^k$
+
+Note:  
+for each bit of $A$, the probability it's been set to 1 is $1-(1-\frac{1}{n})^{k|S|}$  
+$(1-\frac{1}{n})^{k|S|} \leq 1-e^{\frac{-k|S|}{n}} = 1-e^{\frac{-k}{b}}$  
+$b$ = number of bits per object ($n/|S|$)
+
+![Image](https://i.imgur.com/luvPqe7.png)
+
+So:  
+under assumption, for $x \not\in S$, false positive probability is $\leq (1-e^{\frac{-k}{b}})^k$, where $b$ = number of bits per object  
+error rate: $\epsilon = (1-e^{\frac{-k}{b}})^k$
+
+for fixed $b$, $epsilon$ is minimized by setting $k \approx (\ln 2)b$ ($\ln 2 \approx 0.693$)
+
+$\epsilon \approx (\frac{1}{2})^{(\ln 2)b}$ or $b \approx 1.44\log_2\frac{1}{\epsilon}$
+
+EX:  
+with $b=8$, choose $k=5, 6$, error probability only $\approx 0.02$
