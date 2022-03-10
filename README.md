@@ -12,3 +12,15 @@ You should use following extension to render latex codes in *.md
 
 ## Algorithms Specialization
 [algorithms-specialization/README.md](algorithms-specialization/README.md)
+
+## Environment
+```bash
+pip install -r requirements.txt
+```
+
+- Python3.8
+- pytest
+- flake8
+- black
+- numpy
+- tqdm

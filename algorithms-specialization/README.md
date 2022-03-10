@@ -16,12 +16,6 @@
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
 
-## Codes
-- Python3.8
-- pytest
-- flake8
-- black
-
 ## Usage
 Run pytest in each subfolder in `./codes`.
 1. Karatsuba Multiplication
@@ -71,4 +65,14 @@ Run pytest in each subfolder in `./codes`.
     ```bash
     cd algorithms-specialization/codes/course2_week3
     python3 median_maintenance.py
+    ```
+8. 2 Sum
+    You should download dataset and place at `algorithms-specialization/codes/course2_week4/algo1-programming_prob-2sum.txt`.  
+    [dataset](http://www.algorithmsilluminated.org/datasets/problem12.4.txt)
+    ```bash
+    cd algorithms-specialization/codes/course2_week4
+    wget http://www.algorithmsilluminated.org/datasets/problem12.4.txt -O algo1-programming_prob-2sum.txt
+
+    # take long time to compute the answer (427)
+    python3 two_sum.py
     ```

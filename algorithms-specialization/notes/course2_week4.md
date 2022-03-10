@@ -290,3 +290,8 @@ $\epsilon \approx (\frac{1}{2})^{(\ln 2)b}$ or $b \approx 1.44\log_2\frac{1}{\ep
 
 EX:  
 with $b=8$, choose $k=5, 6$, error probability only $\approx 0.02$
+
+## Problem Set
+![Image](https://i.imgur.com/bstvJPe.png)
+
+![Image](https://i.imgur.com/KacUmoT.png)
