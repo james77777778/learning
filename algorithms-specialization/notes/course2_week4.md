@@ -292,6 +292,24 @@ EX:
 with $b=8$, choose $k=5, 6$, error probability only $\approx 0.02$
 
 ## Problem Set
-![Image](https://i.imgur.com/bstvJPe.png)
+![Image](https://i.imgur.com/bstvJPe.png)  
+There are $C_2^n$ pairs of distinct keys. By the previous problem, each pair has a $\frac{1}{m}$ chance of colliding. $C_2^n \frac{1}{m} = \frac{n(n-1)}{2m}$
 
-![Image](https://i.imgur.com/KacUmoT.png)
+![Image](https://i.imgur.com/KacUmoT.png)  
+The probabibilty of false positive, $\epsilon$, is approximately $(1-e^{\frac{-k}{b}})^k$, where $b$ is the number of bits per object and $k$ is the number of hash functions. $k$ is approximated by $0.693 b = 11$ ($k \approx (\ln 2)b$). Plugging that in the formula for $\epsilon$, we get $(1-e^{\frac{-11}{16}})^11=0.0004$, which is $.04\%$.
+
+## Final Exam
+- What is the running time of depth-ﬁrst search, as a function of $n$ and $m$, if the input graph $G=(V, E)$ is represented by an adjacency matrix (i.e., NOT an adjacency list), where as usual $n=|V|$ and $m=|E|$?  
+    $\Theta(n^2)$，因為每次找neighborhood都需要找整個$n$數列
+
+- Breadth-first search can be used to compute the connected components of an undirected graph in $O(m+n)$ time.  
+    ![Image](https://i.imgur.com/wnLbozF.png)
+
+- When does a directed graph have a unique topological ordering?  
+    1. Whenever it is directed acyclic
+    2. None of the other options
+    3. **Whenever it is a complete directed graph**
+    4. Whenever it has a unique cycle
+
+    https://stackoverflow.com/a/8106372  
+    A topological sort will be unique if and only if there is a directed edge between each pair of consecutive vertices in the topological order (i.e., the digraph has a Hamiltonian path).
