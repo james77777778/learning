@@ -14,6 +14,10 @@
     - [Week3](notes/course2_week3.md): Heaps, Balanced Binary Search Trees
     - [Week4](notes/course2_week4.md): Hashing, Bloom Filters
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
+    - [Week1](notes/course3_week1.md): Greedy Algorithms, Scheduling Application, Prim's Minimum Spanning Tree
+    - [Week2](notes/course3_week2.md): 
+    - [Week3](notes/course3_week3.md): 
+    - [Week4](notes/course3_week4.md): 
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
 
 ## Usage
