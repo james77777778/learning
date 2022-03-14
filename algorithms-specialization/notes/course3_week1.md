@@ -133,3 +133,58 @@ Alg 1 not (always) correct
 
 Claim:  
 Alg 2 (order jobs by decreasing ratio $\frac{w_j}{l_j}$) is always correct!
+
+#### Correctness Proof
+order jobs by decreasing ratio $\frac{w_j}{l_j}$
+
+Proof:  
+by an **Exchange Argument**
+
+Plan:  
+Fix arbitrary input of $n$ jobs. Will proceed by contradiction.  
+let $\sigma=$ greedy schedule, $\sigma^*=$ optimal schedule  
+greedy schedule will produce schedule even better than $\sigma^*$, contradicting purported 據稱的 optimality of $\sigma^*$
+
+Assume:  
+1. all $\frac{w_j}{l_j}$ is distinct
+2. (by renaming jobs) $\frac{w_1}{l_1} > \frac{w_2}{l_2} > ... > \frac{w_n}{l_m}$
+
+Thus:  
+greedy scheduler $\sigma$ is just $1,2,3,...,n$
+
+Thus:  
+if optimal scheduler $\sigma^* \neq \sigma$, then there are consecutive jobs $i, j$ with $i > j$
+
+Thought Experiment:  
+suppose we **exchage** order of $i, j$ in $\sigma^*$ (leaving other jobs unchanged)
+
+![Image](https://i.imgur.com/JUWd8gY.png)
+
+Question:  
+what is the effect of exchaning on the completion times of:
+1. job $k$ other that $i, j$: **uneffected**
+2. job $i$: **goes up**  $l_j$
+3. job $j$: **goes down** $l_i$
+
+Upshot:  
+1. cost of exchange $w_il_j$
+2. benefit of exchange $w_jl_i$
+
+Note:  
+$i > j$ =>  
+$\frac{w_i}{l_i} < \frac{w_j}{l_j}$ =>  
+$w_il_j < w_jl_i$ => cost < benefit
+
+**swap improves $\sigma^*$, contradicts optimality of $\sigma^*$, QED**
+
+延伸：  
+如果$\frac{w_i}{l_i}$可以相等於$\frac{w_j}{l_j}$ (有tie的情況)
+
+證明基本上都相同  
+$i > j$ =>  
+$\frac{w_i}{l_i} \leq \frac{w_j}{l_j}$ =>  
+$w_il_j \leq w_jl_i$ => cost $\leq$ benefit
+
+after at most $C_2^n$ such exchanges, can transform $\sigma^*$ into $\sigma$ =>  
+$\sigma$ at least as good as $\sigma^*$ =>  
+greedy 也是optimal的一種 QED!
