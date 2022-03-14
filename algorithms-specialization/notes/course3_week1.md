@@ -188,3 +188,58 @@ $w_il_j \leq w_jl_i$ => cost $\leq$ benefit
 after at most $C_2^n$ such exchanges, can transform $\sigma^*$ into $\sigma$ =>  
 $\sigma$ at least as good as $\sigma^*$ =>  
 greedy 也是optimal的一種 QED!
+
+## Minimum Spanning Tree
+connect a bunch of points together as cheaply as possible
+
+Applications:  
+clustering, networking
+
+Blazingly fast greedy algorithms ($O(m\log n)$):  
+1. Prim's algorithm
+2. Kruskal's algorithm (MST)
+
+### Problem Definition
+Input:  
+undirected graph $G=(V, E)$, adjacency list representation and a cost $c_e$ for each edge $e \in E$
+
+Output:  
+minimum cost tree $T\subset E$ that spans all vertices  
+- $T$ has no cycles
+- the subgraph $(V, T)$ is connected
+
+Assumption:  
+1. input graph $G$ is connected
+    - 不然就沒有spanning tree (沒辦法span all vertices)
+    - 很容易檢查 (depth-first search)
+2. edge costs are distinct
+    - Prim + Kruskal remain correct with ties
+    - 正確性不容易證明 (跳過)
+
+### Prim's MST Algorithm
+跟Dijkstra's Shortest Path Algorithm很相似，但是Dijkstra是要找$A[v] + l_{vw}$ (Dijkstra's greedy criterion)，每次找的$l_{vw}$是以source vertex為根源，找到整條路徑cost最低的。  
+相對的Prim's MST Algorithm每次只找所有可選的edge中，cost最小的，並沒有source vertex的概念。
+
+Example 從右上開始:  
+![Image](https://i.imgur.com/K0DgEbM.png)
+
+Pseudocode:  
+```
+- init X = {s}  (s為隨機選的vertex)
+- T = {}  (一開始的spanning tree沒有任何vertex)
+- while X != U:
+    - let e = (u, v) be the cheapest edge of G with u in X, v not in X
+    - add e to T
+    - add v to X
+```
+
+### The Correctness of Prim's Algorithm
+Theorem:  
+Prim's algorithm always compute an MST.
+
+Part I:  
+compute a spanning tree $T^*$
+
+Part II:  
+$T^*$ is an MST (cut property)
+
