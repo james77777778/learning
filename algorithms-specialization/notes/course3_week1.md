@@ -243,3 +243,56 @@ compute a spanning tree $T^*$
 Part II:  
 $T^*$ is an MST (cut property)
 
+#### Cuts
+Definition:  
+a cut of a graph $G=(V, E)$ is a partition of $V$ into $2$ non-empty sets
+
+![Image](https://i.imgur.com/TRPN7ZO.png)
+
+How many cuts does a graph with $n$ vertices?  
+$2^n$ (choose in set A or B)
+
+#### Empty Cut Lemma
+a graph is not connected <=> $\exists$ cut $(A, B)$ with **no** crossing edges
+
+Proof (<=):  
+Assume the RHS. Picking any $u \in A$ and $v \in B$.  
+Since no edges cross $(A, B)$, there is no $u-v$ path in $G$ => G not connected
+
+![Image](https://i.imgur.com/118hRYi.png)
+
+Proof (=>):  
+Assume the LHS. Suppose $G$ has no $u-v$ path.  
+Define:  
+- $A=\{\text{vertices reachable from u in }G\}$ (i.e., $u$'s connected component)
+- $B=\{\text{all other vertices}\}$ (i.e., all other connected component)
+
+![Image](https://i.imgur.com/A8cmxSD.png)
+
+no edges cross the cut $(A, B)$ 不然的話$A$應該會更大，包含更多點
+
+QED!
+
+#### Two Easy Facts
+Double-Crossing Lemma:  
+suppose the cycle $C \subseteq E$ has an edge crossing the cut $(A, B)$: then so does some other edge of $C$
+
+![Image](https://i.imgur.com/7xd6nrL.png)
+
+Lonely Cut Corollary 推論:  
+if $e$ is the only edge crossing some cut $(A, B)$, then it is not in any cycle
+
+#### Proof of Part I
+Claim:  
+Prim's algorithm outputs a spanning tree (not MST yet)
+
+Proof:  
+1. algorithm maintains invariant that $T$ spans $X$ (you check)
+2. can't get stuck with $X \neq V$  
+    不然的話 $(X, V-X)$會是空的，Empty Cut Lemma
+3. no cycles ever get created in $T$  
+    假設任意iteration, 假設$e$要被加入$T$，e會是第一個edge橫跨$(X, V-X)$，所以根據Lonely Cut Corollary，不會產生任何cycle
+
+![Image](https://i.imgur.com/yzh7ran.png)
+
+QED!
