@@ -296,3 +296,56 @@ Proof:
 ![Image](https://i.imgur.com/yzh7ran.png)
 
 QED!
+
+#### The Cut Property
+consider an edge $e$ of $G$.  
+Suppose there is a cut $(A, B)$ such that $e$ is the cheapest edge of $G$ that crosses it.  
+Then $e$ belongs to the MST of $G  
+(如果edge的weight是唯一的，則MST也會是唯一的)
+
+![Image](https://i.imgur.com/Us874ib.png)
+
+補充：  
+![Image](https://i.imgur.com/cEZdAxu.png)  
+![Image](https://i.imgur.com/4yJia31.png)  
+![Image](https://i.imgur.com/orKZfHv.png)  
+假如一条横切边他不是最短的，那么必然存在一条最短的边，连接两部分，否则这两部分不连通，无法构成生成树。
+
+Cut Property => Prim's algorithm is correct.  
+
+Proof:  
+By previous, Prim's algorithm output a spanning tree $T^*$
+
+Key point:  
+every edge $e \in T^*$ is explicity justified by the Cut Property.  
+=> $T^*$ is a subset of the MST  
+=> since $T^*$ is already a spanning tree, it must be the MST
+
+QED!
+
+### Fast Implementation of Prim's Algorithm
+Pseudocode:  
+```
+- init X = {s}  (s為隨機選的vertex)
+- T = {}  (一開始的spanning tree沒有任何vertex)
+- while X != U:
+    - let e = (u, v) be the cheapest edge of G with u in X, v not in X
+    - add e to T
+    - add v to X
+```
+
+Running time of straightforward implementation:
+- $O(n)$ iterations
+- $O(m)$ time per iteration
+
+=> $O(mn)$ time
+
+#### Speed-up via Heaps
+Heap:  
+support INSERT, EXTRACT-MIN and DELETE in $O(\log n)$ time
+
+Natural idea:  
+use heap to store edges, with keys = edge costs
+
+=> $O(m \log n)$ implementation!
+
