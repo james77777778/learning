@@ -334,13 +334,14 @@ Pseudocode:
     - add v to X
 ```
 
-Running time of straightforward implementation:
+Straightforward Implementation:
+- $n$: vertices; $m$: number of edges
 - $O(n)$ iterations
 - $O(m)$ time per iteration
 
 => $O(mn)$ time
 
-#### Speed-up via Heaps
+#### Prim's Algorithm with Heaps
 Heap:  
 support INSERT, EXTRACT-MIN and DELETE in $O(\log n)$ time
 
@@ -349,3 +350,51 @@ use heap to store edges, with keys = edge costs
 
 => $O(m \log n)$ implementation!
 
+Invariant 1:  
+elements in heap = vertices of $V-X$
+
+Invariant 2:  
+for $v \in V-X$, $key[v]$ = cheapest edge $(u, v)$ with $v \in X$ 
+
+![Image](https://i.imgur.com/TJMh8al.png)
+
+Check:  
+can initialize heap with $O(m+n\log n) = O(m\log n)$ preprocessing  
+($m$是為了得到keys, $n\log n$代表$n-1$次的INSERT, $m \geq n-1$因為$G$是connected)
+
+Note:  
+EXTRACT-MIN yields next vertex $v \not \in X$ and edge $(u, v)$ crossing $(X, V-X)$ to add to $X, T$ respectively.
+
+#### Quiz: Issue with Invariant 2
+![Image](https://i.imgur.com/BinhYYL.png)
+
+1. current value of $key[v]$
+2. current value of $key[w]$
+3. value of $key[w]$ after 1 iteration of Prim's algorithm
+
+Ans: 2, 10, 1
+
+#### Maintaining Invariant 2
+Issue:  
+might need to recompute some keys to maintain Invariant 2 after each EXTRACT-MIN
+
+Pseudocode:  
+```
+- when v added to X:
+    - each edge (v, w) in E:
+        - if w in V-X
+            - DELETE w from heap
+            - recompute key[w] = min(key[w], C_vw)
+            - INSERT w into heap
+```
+
+#### Running Time with Heaps
+- $(n-1)$ INSERT during preprocessing
+- $(n-1)$ EXTRACT-MIN (1 per iteration of while loop)
+- each edge $(v, w)$ triggers 1 DELETE/INSERT combo
+
+=> $O(m)$ heap operations ($m \geq n-1$ since $G$ connected)  
+=> $O(m\log n)$ time
+
+### Problem Set
+[https://blogs.asarkar.com/algorithms-design-analysis-2/set-1/](https://blogs.asarkar.com/algorithms-design-analysis-2/set-1/)
