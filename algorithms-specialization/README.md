@@ -15,7 +15,7 @@
     - [Week4](notes/course2_week4.md): Hashing, Bloom Filters
 3. Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming
     - [Week1](notes/course3_week1.md): Greedy Algorithms, Scheduling Application, Prim's Minimum Spanning Tree
-    - [Week2](notes/course3_week2.md): 
+    - [Week2](notes/course3_week2.md): Kruskal's MST Algorithm, Clustering
     - [Week3](notes/course3_week3.md): 
     - [Week4](notes/course3_week4.md): 
 4. Shortest Paths Revisited, NP-Complete Problems and What To Do About Them
@@ -36,14 +36,14 @@ Run pytest in each subfolder in `./codes`.
     ```bash
     cd algorithms-specialization/codes/course1_week3
     pytest
-    # or
+    # directly run
     python3 quick_sort.py
     ```
 4. Minimum Cut (Random)
     ```bash
     cd algorithms-specialization/codes/course1_week4
     pytest
-    # or
+    # directly run
     # iteration is set to 100, the final answer should be 17
     python3 mincut.py
     ```
@@ -54,15 +54,16 @@ Run pytest in each subfolder in `./codes`.
     # this might take some time due to large dataset `SCC.txt`
     cd algorithms-specialization/codes/course2_week1
     wget http://www.algorithmsilluminated.org/datasets/problem8.10.txt -O SCC.txt
+
     pytest
-    # or
+    # directly run
     python3 scc.py
     ```
 6. Dijkstra's Shortest Path  
     ```bash
     cd algorithms-specialization/codes/course2_week2
     pytest
-    # or
+    # directly run
     python3 dijkstra.py
     ```
 7. Median Maintenance  
@@ -84,7 +85,8 @@ Run pytest in each subfolder in `./codes`.
     ```bash
     cd algorithms-specialization/codes/course3_week1
     pytest
-    # or
+    
+    # directly run
     # scheduling (difference, ratio)
     python3 scheduling.py
     # Prim's Minimum Spanning Tree
