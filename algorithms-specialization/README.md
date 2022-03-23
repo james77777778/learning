@@ -70,7 +70,7 @@ Run pytest in each subfolder in `./codes`.
     cd algorithms-specialization/codes/course2_week3
     python3 median_maintenance.py
     ```
-8. 2 Sum
+8. 2 Sum  
     You should download dataset and place at `algorithms-specialization/codes/course2_week4/algo1-programming_prob-2sum.txt`.  
     [dataset](http://www.algorithmsilluminated.org/datasets/problem12.4.txt)
     ```bash
@@ -79,4 +79,14 @@ Run pytest in each subfolder in `./codes`.
 
     # take long time to compute the answer (427)
     python3 two_sum.py
+    ```
+9. Greedy Scheduling, Prim's Minimum Spanning Tree (Heap-based)  
+    ```bash
+    cd algorithms-specialization/codes/course3_week1
+    pytest
+    # or
+    # scheduling (difference, ratio)
+    python3 scheduling.py
+    # Prim's Minimum Spanning Tree
+    python3 prim_mst.py
     ```
