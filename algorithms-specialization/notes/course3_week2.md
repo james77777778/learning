@@ -120,4 +120,48 @@ $\Theta(\log n)$, every time $v$'s leader pointer gets updated, population of it
 
 => $O(m\log n)$ total!
 
+### State-of-the-Art MST Algorithms
+Question:  
+can we do better than $O(m\log n)$? (Prim, Kruskal)
+
+Answer:  
+yes!  
+- $O(m)$ randomized algorithm (Karger-Klein-Tarjan, JACM 1995)
+- $O(m\alpha(n))$ deterministic (Chazelle JOTCM 2000)  
+    $\alpha(n)$ inverse Ackermann function, grows much slower than $\log n$ = number of times you can apply $\log$ to $n$ until result drops below $1$
+
 ## Clustering
+Informal goal:  
+given $n$ points, classify into "coherent groups" (unsupervised learning)
+
+Assumptions:  
+1. as input, given a (dis)similarity measure: a distance $d(p, q)$ between each point pair
+2. symmetric (i.e., $d(p, q) = d(q, p)$)
+
+Examples:  
+Euclidean distance, genome similarity, etc.
+
+### Max-Spacing k-Clusterings
+Assume:  
+we know $k =$ number of clusters desired  
+(all points $p, q$ separated if they're assigned to different clusters)
+
+Definition:  
+the spacing of a k-clustering is $\min_{\text{separated p,q}} d(p,q)$ (the bigger, the better)
+
+Problem statement:  
+given a distance measure $d, k$, compute the k-clustering with maximum spacing
+
+### Greedy Algorithm
+![Image](https://i.imgur.com/PqDrS9c.png)
+
+```
+- initially, each point in a separate cluster
+- repeat until only k clusters:
+    - let p, q = closest pair of separated points
+    - merge the clusters containing p, q into a single cluster
+```
+
+Note:  
+just like Kruskal's MST algorithm, but stopped early  
+=> single-link clustering
