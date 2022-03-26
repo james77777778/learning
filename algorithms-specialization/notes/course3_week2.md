@@ -165,3 +165,40 @@ given a distance measure $d, k$, compute the k-clustering with maximum spacing
 Note:  
 just like Kruskal's MST algorithm, but stopped early  
 => single-link clustering
+
+### Correctness of Greedy Algorithm
+Theorem:  
+single-link clustering finds the max-spacing k-clustering
+
+Proof:  
+let $C_1, ..., C_k$ = greedy clustering with spacing $S$  
+let $\hat{C_1}, ..., \hat{C_k}$ = arbitrary other clustering
+
+Need to show:  
+spacing of $\hat{C_1}, ..., \hat{C_k}$ is $\leq S$
+
+#### Proof
+Case 1:  
+$\hat{C_i}$'s are the same as the $C_i$'s (may be after ranaming) => has the same spacing $S$
+
+Case 2:  
+otherwise, can find a point pair $p, q$ such that  
+1. $p, q$ in the same greedy cluster $C_i$
+2. $p, q$ in different clusters $\hat{C_i}, \hat{C_j}$
+
+Property of greedy algorithm:  
+if two points $x, y$ directly merged at some point, then $d(x, y) \leq S$  
+(distance between merged point pairs only goes up)
+
+Tricky case:  
+$p, q$ indirectly merged through multiple direct merges
+
+![Image](https://i.imgur.com/im2F9Lx.png)
+
+let $p, q_1, ..., q_e, q$ be the path of direct greedy merges connecting $p, q$
+
+Key point:  
+since $p \in \hat{C_i}$ and $q \not \in \hat{C_i}$, $\exists$ consecutive pair $a_j, a_{j+1}$ with $a_j \in \hat{C_i}$, $a_{j+1} \not \in \hat{C_i}$  
+=> $S \geq d(a_j, a_{j+1}) \geq \text{spacing of } \hat{C_1}, ..., \hat{C_k}$
+
+QED!
