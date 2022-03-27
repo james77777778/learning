@@ -202,3 +202,18 @@ since $p \in \hat{C_i}$ and $q \not \in \hat{C_i}$, $\exists$ consecutive pair $
 => $S \geq d(a_j, a_{j+1}) \geq \text{spacing of } \hat{C_1}, ..., \hat{C_k}$
 
 QED!
+
+### Problem Set
+![Image](https://i.imgur.com/AbfSj2t.png)  
+![Image](https://i.imgur.com/gLebQBS.png)
+
+![Image](https://i.imgur.com/KqALiO8.png)  
+利用exchange argument，由於演算法會把所有cyle都消除，所以一定會得到spanning tree。  
+且每次刪掉的都是比較大的cost，所以會得到minimum spanning tree。
+
+![Image](https://i.imgur.com/wi7T5ei.png)  
+利用Light-edge property，可以知道MST一定是minimum bottleneck spanning tree，但是反過來卻不一定正確。  
+舉例C<-(4)-A-(4)->B-(1)->C，{(A, B), (A, C)}是minimum bottleneck spanning tree，卻不是MST。
+
+![Image](https://i.imgur.com/4DIKEWg.png)  
+![Image](https://i.imgur.com/iis2y5t.png)
