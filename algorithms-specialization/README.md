@@ -92,3 +92,12 @@ Run pytest in each subfolder in `./codes`.
     # Prim's Minimum Spanning Tree
     python3 prim_mst.py
     ```
+10. Clustering  
+    ```bash
+    cd algorithms-specialization/codes/course3_week2
+    wget http://www.algorithmsilluminated.org/datasets/problem12.4.txt -O algo1-programming_prob-2sum.txt
+
+    # directly run
+    python3 clustering.py
+    python3 hamm_clustering.py
+    ```
