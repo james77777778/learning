@@ -75,12 +75,7 @@ Idea:
 replace the symbols $a, b$ by a new **meta-symbol** $ab$  
 the frequency $P_{ab} = P_a + P_b$ 
 
-#### Example
-從最小的frequency開始merge
-
-![Image](https://i.imgur.com/hROqifw.png)
-
-### Huffman's Algorithm
+#### Huffman's Algorithm
 ```
 If |Sigma| = 2 return
 
@@ -92,5 +87,86 @@ Expand T' to a tree T with leaves
 Return T
 ```
 ![Image](https://i.imgur.com/KuSAy1I.png)
+
+### Examples
+從最小的frequency開始merge  
+![Image](https://i.imgur.com/hROqifw.png)
+
+另一個例子：  
+![Image](https://i.imgur.com/xSA7NBh.png)  
+![Image](https://i.imgur.com/769ohZ8.png)  
+![Image](https://i.imgur.com/Kzz7se1.png)  
+- A: 000
+- B: 0010
+- C:0011
+- D: 01
+- E: 10
+- F: 11
+
+### Correctness of Huffman's Algorithm
+Theorem:  
+Huffman's algorithm computes a binary tree (with leaves is the symbols of $\Sigma$) that minimizes the average encoding length:  
+$L(T)=\Sigma_{i\in \Sigma}p_i [\text{depth of leaf i in T}]$
+
+Proof:  
+by induction on $n=|\Sigma|$ (assume $n \geq 2$)
+- Base case: when $n=2$, algorithm outpus the optimal tree (1 bit per symbol)
+- Induction step: fix input with $n=|\Sigma| > 2$
+- By induction hypothesis: algorithm solves smaller subproblem optimally
+
+Inductive step:  
+Let $\Sigma' = \Sigma$ with $a, b$ replaced by meta-symbol $ab$.  
+Define $p_{ab}=p_a+p_b$
+
+![Image](https://i.imgur.com/FlOZETC.png)
+
+Important:  
+for every such pair $T', T$,  
+($T$為merge前，$a,b$還分開的狀態；$T'$為merge後，$a,b$成為$ab$)  
+$L(T) - L(T') = p_a(d+1) + p_b(d+1) - (p_a+p_b) d = p_a + p_b$  
+indepent of $T, T'$!!
+
+Key lemma:  
+there is an optimal tree (for $\Sigma$) in $X_{ab}$ (i.e., $a, b$ were **safe** to merge)
+
+Intuition:  
+can make an optimal tree better by pushing $a, b$ as deep as possible (since $a, b$ have smallest frequencies)
+
+Proof of Key Lemma:  
+By exchange argument. Let $T^*$ be any tree that minimizes $L(T)$ for $\Sigma$  
+Let $x, y$ be siblings at the deepest level of $T^*$
+
+The exchange:  
+obtain $\hat{T}$ from $T^*$ by swapping lables $a, x$, $b, y$
+
+![Image](https://i.imgur.com/lBcOqB7.png)
+
+Note:  
+$\hat{T} \in X_{ab}$ (by choice of $x, y$)
+
+To finish:  
+will show that $L(\hat{T}) \leq L(T^*)$ ($\hat{T}$ also optimal, complete proof)
+
+Reason:  
+$L(T^*) - L(\hat{T}) =$  
+$(p_x - p_a)[\text{depth of x in T* - depth of a in T*}] +$  
+$(p_y-p_b)[\text{depth of y in T* - depth of b in T*}]$
+
+$L(T^*) - L(\hat{T}) \geq 0$
+
+QED!
+
+### Running Time
+Naive implementation:  
+$O(n^2)$ time where $n=|\Sigma|$
+
+Speed up:  
+use a heap!  
+keys = frequencies  
+=> $O(n\log n)$
+
+Even faster:  
+sorting + $O(n)$ additional work  
+manage (meta-)symbols using two queues
 
 ## Dynamic Programming
