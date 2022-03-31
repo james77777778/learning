@@ -46,4 +46,51 @@ if $P_A=0.6, P_B=0.25, P_C=0.1, P_D=0.05$, then $L(T) = 1.55$
 Output:  
 a binary tree $T$ minimizing the average encoding length $L(T)$
 
+### A Greedy Algorithm
+Question:  
+what's a principled approach for building a tree with leaves <-> symbols of $\Sigma$?
+
+Natural but suboptimal idea:  
+top-down / divide + conquer  
+- partition $\Sigma$ into $\Sigma_1, \Sigma_2$, each with $\approx 50\%$ of total frequency
+- recursively compute $T_1$ for $\Sigma_1$, $T_2$ for $\Sigma_2$
+
+#### Huffman's (optimal) idea:  
+- build tree bottom-up
+- using successive merges
+
+Question:  
+which pair of symbols is **safe** to merge?
+
+Observation:  
+final encoding length of $i\in \Sigma =$ number of merges its subtree endures 忍受
+
+![Image](https://i.imgur.com/SdsPd5Q.png)
+
+#### How to recurse?  
+Suppose:  
+1st iteration of algorithm merges symbols $a, b$
+
+Idea:  
+replace the symbols $a, b$ by a new **meta-symbol** $ab$  
+the frequency $P_{ab} = P_a + P_b$ 
+
+#### Example
+從最小的frequency開始merge
+
+![Image](https://i.imgur.com/hROqifw.png)
+
+### Huffman's Algorithm
+```
+If |Sigma| = 2 return
+
+Let a,b in Sigma have the smallest frequencies
+Let Sigma' = Sigma with a,b replaced by new symbol ab
+Define P_ab = P_a + P_b
+Recursively compute T'
+Expand T' to a tree T with leaves
+Return T
+```
+![Image](https://i.imgur.com/KuSAy1I.png)
+
 ## Dynamic Programming
