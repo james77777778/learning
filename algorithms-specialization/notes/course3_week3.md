@@ -170,3 +170,53 @@ sorting + $O(n)$ additional work
 manage (meta-)symbols using two queues
 
 ## Dynamic Programming
+### Problem Statement
+Input:  
+a path graph $G=(V, E)$ with nonnegative weights on vertices
+
+![Image](https://i.imgur.com/njdCCsj.png)
+
+Desired output:  
+subset of nonadjacent vertices (an independent set) of maximum total weight
+
+Next:  
+iterate through our algorithm design priciples
+
+### A Greedy Approach
+iteratively choose the max-weight vertex not adjacent to any previously chosen vertex
+
+![Image](https://i.imgur.com/h3IrQ9Y.png)
+
+真正最大值應該為$4+4=8$，但是greedy的作法只能得到$5+1=6$  
+在此問題下，Greedy沒辦法得到最佳解
+
+### A Divide & Conquer Approach
+recursively compute the max-weight IS of 1st half, for 2nd half, then combine the solutions
+
+![Image](https://i.imgur.com/JytXSy4.png)
+
+what if recursive sub-solutions conflict?  
+=> 沒辦法找到快速的解法
+
+### Optimal Substructure
+Critical step:  
+reason about structure of an optimal solution (in terms of optimal solutions of smaller subproblems)
+
+Motivation:  
+this thought experiment narrows down the set of candidates for the optimal solution; can search through the small set using brute-force search
+
+Notation:  
+let $S \subseteq U$ be a max-weight independent set (IS).  
+let $v_n$ = last vertex of path
+
+#### A Case Analysis
+Case 1:  
+suppose $v_n \not \in S$, let $G'=G$ with $v_n$ deleted.  
+Note: $S$ also an IS of $G'$  
+Note: $S$ must be a max-weight IS of $G'$ if $S^*$ was better, it would also be better than $S \in G$ (矛盾)
+
+Case 2:  
+suppose $v_n \in S$   
+Note: previous vertex $v_{n-1} \not \in S$, let $G''=G$ with $v_{n-1}, v_n$ deleted.  
+Note: $S - \{v_n\}$ is an IS of $G''$  
+Note: must in fact be a max-weight IS of $G''$ if $S^*$ is better than $S \in G''$, then $S^* \cup \{v_n\}$ is better than $S \in G$ (矛盾)
