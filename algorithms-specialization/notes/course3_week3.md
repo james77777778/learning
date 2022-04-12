@@ -171,6 +171,8 @@ manage (meta-)symbols using two queues
 
 ## Dynamic Programming
 ### Problem Statement
+Maximum Weighted Independent Set
+
 Input:  
 a path graph $G=(V, E)$ with nonnegative weights on vertices
 
@@ -220,3 +222,74 @@ suppose $v_n \in S$
 Note: previous vertex $v_{n-1} \not \in S$, let $G''=G$ with $v_{n-1}, v_n$ deleted.  
 Note: $S - \{v_n\}$ is an IS of $G''$  
 Note: must in fact be a max-weight IS of $G''$ if $S^*$ is better than $S \in G''$, then $S^* \cup \{v_n\}$ is better than $S \in G$ (矛盾)
+
+### Linear-Time Algorithm
+Obvious fix:  
+the first time you solve a subproblem, cache its solution in a global table for $O(1)$ time LOOKUP later on. (**memoization**)
+
+Even better:  
+reformulate as a bottom-up iteration algorithm  
+Let $G_i =$ 1st $i$ vertices of $G$
+
+Plan:  
+populate array $A$ left to right with $A[i]= \text{IS of }G_i$
+
+Initialization:  
+$A[0] = 0, A[1] = w_1$
+
+Main loop:  
+```
+For i=2, 3, ..., n:
+    A[i] = max{A[i-1], A[i-2] + w_i}
+```
+
+($A[i-1]$: case 1, $A[i-2]+w_i$: case 2)
+
+Running Time: $O(n)$
+
+Correctness:  
+same as recursion algorithm
+
+可參考： [https://hideoushumpbackfreak.com/algorithms/np-hard-problems-weighted-independent-set](https://hideoushumpbackfreak.com/algorithms/np-hard-problems-weighted-independent-set)
+
+Pseudo Code:  
+- 直覺版本 $O(n^2)$  
+    ```
+    max_weight_is:
+        inputs:
+            V = array of vertices arranged to represent a path graph
+            n = number of vertices
+
+        if n = 0:
+            return [] // Empty Set
+
+        if n = 1:
+            return V
+
+        result1 = max_weight_is V[0] - V[n - 1] // recurse
+        result2 = max_weight_is V[0] - V[n - 2] // recurse
+
+        if(result1 > result2 + V[n])
+            return result 1
+        else
+            return result2 + V[n]
+    ```
+- 利用bottom-up + 記憶 $O(n)$  
+    ```
+    max_weight_is:
+        inputs:
+            V = array of vertices arranged to represent a path graph
+            n = number of vertices
+            S = solutions array of size n + 1
+
+        S[0] = []
+        S[1] = V[0]
+
+        i = 2 to n:
+            if S[i-1] > S[i-2] + V[i-1]:
+                S[i] = S[i-1]
+            else
+                S[i] = S[i-2] + V[i-1]
+
+    return S[n+1]
+    ```
